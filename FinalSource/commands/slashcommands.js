@@ -44,7 +44,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var Discord = require("discord.js");
-var slash_commands_1 = require("slash-commands");
+var slash_commands_1 = __importDefault(require("slash-commands"));
 var HelperFunctions_1 = __importDefault(require("../HelperFunctions"));
 var command = {
     name: 'slashcommands',
@@ -63,7 +63,7 @@ function execute(commandData, discordUser) {
                         commandName: command.name
                     };
                     commandReturnData.commandName = command.name;
-                    interaction = new slash_commands_1.DiscordInteractions({ applicationId: discordUser.userData.userID,
+                    interaction = new slash_commands_1.default({ applicationId: discordUser.userData.userID,
                         publicKey: discordUser.userData.publicKey,
                         authToken: discordUser.userData.botToken });
                     return [4 /*yield*/, interaction.getApplicationCommands()];

@@ -8,6 +8,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var botCommands = new Map();
+var botinfo_1 = __importDefault(require("./commands/botinfo"));
+botCommands.set(botinfo_1.default.name, botinfo_1.default);
 var clear_1 = __importDefault(require("./commands/clear"));
 botCommands.set(clear_1.default.name, clear_1.default);
 var deletedbentry_1 = __importDefault(require("./commands/deletedbentry"));
