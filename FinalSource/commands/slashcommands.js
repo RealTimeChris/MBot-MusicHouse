@@ -80,7 +80,7 @@ function execute(commandData, discordUser) {
                     msgEmbeds = [];
                     for (x = 0; x < globalCommands.length; x += 1) {
                         msgString += "__**Name**__: " + ((_a = globalCommands[x]) === null || _a === void 0 ? void 0 : _a.name) + " __**Description**__: " + ((_b = globalCommands[x]) === null || _b === void 0 ? void 0 : _b.description) + "\n";
-                        if (msgString.length >= 2000 || x === globalCommands.length - 1) {
+                        if (msgString.length >= 1900 || x === globalCommands.length - 1) {
                             msgEmbed = new Discord.MessageEmbed();
                             if (commandData.guildMember instanceof Discord.User) {
                                 msgEmbed

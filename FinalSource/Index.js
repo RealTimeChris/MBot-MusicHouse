@@ -1,4 +1,4 @@
-// index.ts - The main entry point for my Discord Bot!
+// Index.ts - The main entry point for my Discord Bot!
 // Jan 28, 2021
 // Chris M.
 // https://github.com/RealTimeChris
@@ -52,7 +52,7 @@ var config = require("./config.json");
 var discordUser = new DiscordUser_1.default();
 var client = new Discord.Client();
 client.ws.on('INTERACTION_CREATE', function (interaction) { return __awaiter(void 0, void 0, void 0, function () {
-    var channel_id, channel, id_full, guild_id_full, options_full, name_full, commandData, id, guild_id, _a, options, name_1, id, guild_id, _b, options, name_2, nameSolid, value1, roleID, roleName, roleColor, value, areWeLooping, areWeLooping, songName, songName, redChannelValue, greenChannelValue, blueChannelValue, returnData;
+    var channel_id, channel, id_full, guild_id_full, options_full, name_full, commandData, id, guild_id, _a, options, name_1, id, guild_id, _b, options, name_2, nameSolid, value1, name_3, roleID, roleName, roleColor, value, areWeLooping, areWeLooping, songName, songName, redChannelValue, greenChannelValue, blueChannelValue, returnData;
     var _c;
     return __generator(this, function (_d) {
         switch (_d.label) {
@@ -92,6 +92,10 @@ client.ws.on('INTERACTION_CREATE', function (interaction) { return __awaiter(voi
                     value1 = options_full[0].value;
                     commandData.args[0] = 'musichouse';
                     commandData.args[1] = value1;
+                }
+                if (name_full === "displayguildsdata") {
+                    name_3 = 'musichouse';
+                    commandData.args[0] = name_3;
                 }
                 if (name_full === 'djrole') {
                     name_full = options_full[0].name;

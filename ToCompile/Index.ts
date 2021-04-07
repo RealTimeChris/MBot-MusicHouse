@@ -45,6 +45,10 @@ client.ws.on('INTERACTION_CREATE', async (interaction: any) => {
 		commandData.args[0] = 'musichouse';
 		commandData.args[1] = value1;
 	}
+	if (name_full === "displayguildsdata"){
+		const name = 'musichouse';
+		commandData.args[0] = name;
+	}
 	if (name_full === 'djrole'){
 		name_full = options_full[0].name;
 		if (name_full === 'remove'){

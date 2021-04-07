@@ -56,6 +56,15 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
         // Create Global Command
         await interaction.createApplicationCommand(deletedbentry).then((value: SlashCommands.ApplicationCommand) => console.log(value)).catch((error: Error) => console.log(error.message));
 
+        const displayguildsdata = {
+            "name": "displayguildsdata",
+            "description": "Display info about the servers that the bot is in.",
+            "options":[]                        
+        }
+
+        // Create Global Command
+        await interaction.createApplicationCommand(displayguildsdata).then(error => console.log(error)).catch(error => console.log(error.message));
+
         const djrole = {
             "name": "djrole",
             "description": "Adds, creates, removes, or displays the current DJ role, which controls who can use the music bot.",
@@ -397,7 +406,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
         let msgEmbeds: Discord.MessageEmbed[] = [];
         for (let x = 0; x < globalCommands.length; x += 1){
             msgString += `__**Name**__: ${globalCommands[x]?.name} __**Description**__: ${globalCommands[x]?.description}\n`;
-            if (msgString.length >= 2000 || x === globalCommands.length - 1){
+            if (msgString.length >= 1900 || x === globalCommands.length - 1){
                 let msgEmbed = new Discord.MessageEmbed();
                 if (commandData.guildMember instanceof Discord.User){
                     msgEmbed

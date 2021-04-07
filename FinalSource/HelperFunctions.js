@@ -53,28 +53,29 @@ var HelperFunctions;
     function sendMessageWithCorrectChannel(commandData, messageContents, atUserID) {
         if (atUserID === void 0) { atUserID = null; }
         return __awaiter(this, void 0, void 0, function () {
-            var returnMessage_1, msgEmbeds, error_1;
+            var returnMessage, msgEmbeds, error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 17, , 18]);
+                        returnMessage = void 0;
                         if (!(commandData.toTextChannel instanceof Discord.WebhookClient)) return [3 /*break*/, 7];
                         if (!(atUserID !== null && messageContents instanceof Discord.MessageEmbed)) return [3 /*break*/, 2];
                         msgEmbeds = [];
                         msgEmbeds.push(messageContents);
                         return [4 /*yield*/, commandData.toTextChannel.send("<@!" + atUserID + ">", { embeds: msgEmbeds, split: false })];
                     case 1:
-                        returnMessage_1 = _a.sent();
+                        returnMessage = _a.sent();
                         return [3 /*break*/, 6];
                     case 2:
                         if (!(atUserID === null)) return [3 /*break*/, 4];
                         return [4 /*yield*/, commandData.toTextChannel.send(messageContents)];
                     case 3:
-                        returnMessage_1 = _a.sent();
+                        returnMessage = _a.sent();
                         return [3 /*break*/, 6];
                     case 4: return [4 /*yield*/, commandData.toTextChannel.send("<@!" + atUserID + "> " + messageContents)];
                     case 5:
-                        returnMessage_1 = _a.sent();
+                        returnMessage = _a.sent();
                         _a.label = 6;
                     case 6: return [3 /*break*/, 16];
                     case 7:
@@ -82,28 +83,26 @@ var HelperFunctions;
                         if (!(atUserID !== null && messageContents instanceof Discord.MessageEmbed)) return [3 /*break*/, 9];
                         return [4 /*yield*/, commandData.toTextChannel.send("<@!" + atUserID + ">", { embed: messageContents })];
                     case 8:
-                        returnMessage_1 = _a.sent();
+                        returnMessage = _a.sent();
                         return [3 /*break*/, 13];
                     case 9:
                         if (!(atUserID === null)) return [3 /*break*/, 11];
                         return [4 /*yield*/, commandData.toTextChannel.send(messageContents)];
                     case 10:
-                        returnMessage_1 = _a.sent();
+                        returnMessage = _a.sent();
                         return [3 /*break*/, 13];
                     case 11: return [4 /*yield*/, commandData.toTextChannel.send("<@!" + atUserID + "> " + messageContents)];
                     case 12:
-                        returnMessage_1 = _a.sent();
+                        returnMessage = _a.sent();
                         _a.label = 13;
                     case 13: return [3 /*break*/, 16];
                     case 14:
                         if (!(commandData.toTextChannel instanceof Discord.DMChannel)) return [3 /*break*/, 16];
                         return [4 /*yield*/, commandData.toTextChannel.send(messageContents)];
                     case 15:
-                        returnMessage_1 = _a.sent();
+                        returnMessage = _a.sent();
                         _a.label = 16;
-                    case 16: return [2 /*return*/, new Promise(function (resolve, reject) {
-                            resolve(returnMessage_1);
-                        })];
+                    case 16: return [2 /*return*/, returnMessage];
                     case 17:
                         error_1 = _a.sent();
                         return [2 /*return*/, new Promise(function (resolve, reject) {
@@ -161,12 +160,8 @@ var HelperFunctions;
                             msg = new Discord.Message(commandData.guildMember.client, msg, commandData.fromTextChannel);
                         }
                         msg.delete({ timeout: 20000 });
-                        return [2 /*return*/, new Promise(function (resolve, reject) {
-                                resolve(true);
-                            })];
-                    case 2: return [2 /*return*/, new Promise(function (resolve, reject) {
-                            resolve(false);
-                        })];
+                        return [2 /*return*/, true];
+                    case 2: return [2 /*return*/, false];
                     case 3:
                         error_2 = _a.sent();
                         return [2 /*return*/, new Promise(function (resolve, reject) {
@@ -199,9 +194,7 @@ var HelperFunctions;
                     case 2:
                         areTheyACommander = _a.sent();
                         if (areTheyAnAdmin === true || areTheyACommander === true) {
-                            return [2 /*return*/, new Promise(function (resolve, reject) {
-                                    resolve(true);
-                                })];
+                            return [2 /*return*/, true];
                         }
                         msgString = "------\n**Sorry, but you don't have the permissions required for that!**\n------";
                         msgEmbed = new Discord.MessageEmbed();
@@ -220,9 +213,7 @@ var HelperFunctions;
                         return [4 /*yield*/, msg.delete({ timeout: 20000 })];
                     case 4:
                         _a.sent();
-                        return [2 /*return*/, new Promise(function (resolve, reject) {
-                                resolve(false);
-                            })];
+                        return [2 /*return*/, false];
                     case 5:
                         error_3 = _a.sent();
                         return [2 /*return*/, new Promise(function (resolve, reject) {
@@ -239,20 +230,20 @@ var HelperFunctions;
      */
     function checkIfAllowedInChannel(commandData, discordUser) {
         return __awaiter(this, void 0, void 0, function () {
-            var guildData, isItFound_1, msgString, msgEmbed, x, msg, error_4;
+            var guildData, isItFound, msgString, msgEmbed, x, msg, error_4;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 4, , 5]);
                         guildData = new GuildData_1.default({ dataBase: discordUser.dataBase, id: commandData.guild.id, name: commandData.guild.name, memberCount: commandData.guild.memberCount });
-                        isItFound_1 = true;
+                        isItFound = true;
                         if (!(guildData.musicChannelIDs.length > 0)) return [3 /*break*/, 3];
-                        isItFound_1 = false;
+                        isItFound = false;
                         msgString = "------\n**Sorry, but please do that in one of the following channels:**\n------\n";
                         msgEmbed = new Discord.MessageEmbed();
                         for (x = 0; x < guildData.musicChannelIDs.length; x += 1) {
                             if (commandData.fromTextChannel.id === guildData.musicChannelIDs[x]) {
-                                isItFound_1 = true;
+                                isItFound = true;
                                 break;
                             }
                             else {
@@ -260,7 +251,7 @@ var HelperFunctions;
                             }
                         }
                         msgString += '------';
-                        if (!(isItFound_1 === false)) return [3 /*break*/, 3];
+                        if (!(isItFound === false)) return [3 /*break*/, 3];
                         msgEmbed
                             .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
                             .setColor(guildData.borderColor)
@@ -276,12 +267,8 @@ var HelperFunctions;
                         return [4 /*yield*/, msg.delete({ timeout: 20000 })];
                     case 2:
                         _a.sent();
-                        return [2 /*return*/, new Promise(function (resolve, reject) {
-                                resolve(isItFound_1);
-                            })];
-                    case 3: return [2 /*return*/, new Promise(function (resolve, reject) {
-                            resolve(isItFound_1);
-                        })];
+                        return [2 /*return*/, isItFound];
+                    case 3: return [2 /*return*/, isItFound];
                     case 4:
                         error_4 = _a.sent();
                         return [2 /*return*/, new Promise(function (resolve, reject) {
@@ -298,26 +285,24 @@ var HelperFunctions;
      */
     function checkIfWeHaveControl(commandData, guildData) {
         return __awaiter(this, void 0, void 0, function () {
-            var doWeHaveControl_1, guildMemberRoleManager, memberRoleArray, x, msgString, msgEmbed, msg, error_5;
+            var doWeHaveControl, guildMemberRoleManager, memberRoleArray, x, msgString, msgEmbed, msg, error_5;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 4, , 5]);
                         if (guildData.djRoleID === '') {
-                            return [2 /*return*/, new Promise(function (resolve, reject) {
-                                    resolve(true);
-                                })];
+                            return [2 /*return*/, true];
                         }
-                        doWeHaveControl_1 = false;
+                        doWeHaveControl = false;
                         guildMemberRoleManager = new Discord.GuildMemberRoleManager(commandData.guildMember);
                         memberRoleArray = guildMemberRoleManager.cache.array();
                         for (x = 0; x < memberRoleArray.length; x += 1) {
                             if (memberRoleArray[x].id === guildData.djRoleID) {
-                                doWeHaveControl_1 = true;
+                                doWeHaveControl = true;
                                 break;
                             }
                         }
-                        if (!!doWeHaveControl_1) return [3 /*break*/, 3];
+                        if (!!doWeHaveControl) return [3 /*break*/, 3];
                         msgString = "------\n**Sorry, but you lack the permissions to do that!**\n------";
                         msgEmbed = new Discord.MessageEmbed();
                         msgEmbed
@@ -336,9 +321,7 @@ var HelperFunctions;
                     case 2:
                         _a.sent();
                         _a.label = 3;
-                    case 3: return [2 /*return*/, new Promise(function (resolve, reject) {
-                            resolve(doWeHaveControl_1);
-                        })];
+                    case 3: return [2 /*return*/, doWeHaveControl];
                     case 4:
                         error_5 = _a.sent();
                         return [2 /*return*/, new Promise(function (resolve, reject) {
