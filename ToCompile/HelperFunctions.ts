@@ -45,9 +45,7 @@ module HelperFunctions{
                 returnMessage = await commandData.toTextChannel.send(messageContents as string | Discord.MessageEmbed);
             }
 
-            return new Promise((resolve, reject) => {
-                resolve(returnMessage);
-            });
+            return returnMessage!;
         }
         catch(error){
             return new Promise((resolve, reject) => {
@@ -92,13 +90,9 @@ module HelperFunctions{
                 }
                 msg.delete({timeout: 20000});
                 
-                return new Promise((resolve, reject) => {
-                    resolve(true);
-                });
+                return true;
             }
-            return new Promise((resolve, reject) => {
-                resolve(false);
-            });
+            return false;
         } catch (error) {
             return new Promise((resolve, reject) => {
                 reject(error);
@@ -124,9 +118,7 @@ module HelperFunctions{
                 discordUser.userData.botCommanders);
 
             if (areTheyAnAdmin === true || areTheyACommander === true) {
-                return new Promise((resolve, reject) => {
-                    resolve(true);
-                });
+                return true;
             }
 
             const msgString = `------\n**Sorry, but you don't have the permissions required for that!**\n------`
@@ -142,9 +134,7 @@ module HelperFunctions{
                 msg = new Discord.Message(commandData.guildMember!.client, msg, commandData.fromTextChannel!);
             }
             await msg.delete({timeout:20000});
-            return new Promise((resolve, reject) => {
-                resolve(false);
-            });
+            return false;
         } catch (error) {
             return new Promise((resolve, reject) => {
                 reject(error);
@@ -184,14 +174,10 @@ module HelperFunctions{
                         msg = new Discord.Message(commandData.guildMember!.client, msg, commandData.fromTextChannel!);
                     }
                     await msg.delete({timeout:20000});
-                    return new Promise((resolve, reject) => {
-                        resolve(isItFound);
-                    });
+                    return isItFound;
                 }
             }
-            return new Promise((resolve, reject) => {
-                resolve(isItFound);
-            });
+            return isItFound;
         } catch (error) {
             return new Promise((resolve, reject) => {
                 reject(error);
@@ -205,9 +191,7 @@ module HelperFunctions{
     export async function checkIfWeHaveControl(commandData: FoundationClasses.CommandData, guildData: GuildData): Promise<boolean> {
         try {
             if (guildData.djRoleID === '') {
-                return new Promise((resolve, reject) => {
-                    resolve(true);
-                });
+                return true;
             }
             let doWeHaveControl = false;
 
@@ -236,10 +220,7 @@ module HelperFunctions{
                 }
                 await msg.delete({timeout: 20000});
             }
-
-            return new Promise((resolve, reject) => {
-                resolve(doWeHaveControl);
-            });
+            return doWeHaveControl;
         } catch (error) {
             return new Promise((resolve, reject) => {
                 reject(error);
