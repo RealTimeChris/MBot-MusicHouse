@@ -8,7 +8,6 @@
 import FoundationClasses from './FoundationClasses';
 
 const botcommands = new Map<string, FoundationClasses.BotCommand>();
-
 import clear from './commands/clear';
 botcommands.set(clear.name, clear);
 import deletedbentry from './commands/deletedbentry';
