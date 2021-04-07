@@ -35,6 +35,15 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             //console.log(newInteraction);
         }
 /*
+        const botinfo = {
+            "name": "botinfo",
+            "description": "Displays info about the current bot.",
+            "options":[]
+        }
+
+        // Create Global Command
+        await interaction.createApplicationCommand(botinfo).then(error => console.log(error)).catch(error => console.log(error.message));
+
         const clear = {
             "name": "clear",
             "description": "Clears the current playlist/queue"

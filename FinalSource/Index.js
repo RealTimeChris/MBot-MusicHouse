@@ -52,7 +52,7 @@ var config = require("./config.json");
 var discordUser = new DiscordUser_1.default();
 var client = new Discord.Client();
 client.ws.on('INTERACTION_CREATE', function (interaction) { return __awaiter(void 0, void 0, void 0, function () {
-    var channel_id, channel, id_full, guild_id_full, options_full, name_full, commandData, id, guild_id, _a, options, name_1, id, guild_id, _b, options, name_2, nameSolid, value1, name_3, roleID, roleName, roleColor, value, areWeLooping, areWeLooping, songName, songName, redChannelValue, greenChannelValue, blueChannelValue, returnData;
+    var channel_id, channel, id_full, guild_id_full, options_full, name_full, commandData, id, guild_id, _a, options, name_1, id, guild_id, _b, options, name_2, name_3, nameSolid, value1, name_4, roleID, roleName, roleColor, value, areWeLooping, areWeLooping, songName, songName, redChannelValue, greenChannelValue, blueChannelValue, returnData;
     var _c;
     return __generator(this, function (_d) {
         switch (_d.label) {
@@ -85,6 +85,10 @@ client.ws.on('INTERACTION_CREATE', function (interaction) { return __awaiter(voi
                 _d.sent();
                 _d.label = 6;
             case 6:
+                if (name_full === 'botinfo') {
+                    name_3 = 'musichouse';
+                    commandData.args[0] = name_3;
+                }
                 nameSolid = name_full;
                 if (name_full === 'clear') {
                 }
@@ -94,8 +98,8 @@ client.ws.on('INTERACTION_CREATE', function (interaction) { return __awaiter(voi
                     commandData.args[1] = value1;
                 }
                 if (name_full === "displayguildsdata") {
-                    name_3 = 'musichouse';
-                    commandData.args[0] = name_3;
+                    name_4 = 'musichouse';
+                    commandData.args[0] = name_4;
                 }
                 if (name_full === 'djrole') {
                     name_full = options_full[0].name;

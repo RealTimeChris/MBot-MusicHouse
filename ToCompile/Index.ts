@@ -36,6 +36,10 @@ client.ws.on('INTERACTION_CREATE', async (interaction: any) => {
 		name_full = name;
 		await commandData.initialize(client, channel_id, channel.type, interaction, id_full, guild_id_full);
 	}
+	if (name_full === 'botinfo'){
+		const name = 'musichouse';
+		commandData.args[0] = name;
+	}
 	const nameSolid = name_full;
 	if (name_full === 'clear'){
 
