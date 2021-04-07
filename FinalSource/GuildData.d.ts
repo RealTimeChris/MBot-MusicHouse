@@ -3,7 +3,7 @@ import Level from 'level-ts';
 /**
  * Class representing the startup values of a guild data structure.
  */
-export interface GuildDataInitData {
+interface GuildDataInitData {
     dataBase: Level;
     id: string;
     memberCount: number;
@@ -27,3 +27,4 @@ export default class GuildData extends FoundationClasses.DiscordEntity {
     writeToDataBase(): Promise<void>;
     constructor(initData: GuildDataInitData);
 }
+export {};
