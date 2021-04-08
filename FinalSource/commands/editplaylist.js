@@ -139,7 +139,7 @@ function execute(commandData, discordUser) {
                     return [4 /*yield*/, msg.delete({ timeout: 20000 })];
                 case 5:
                     _g.sent();
-                    _g.label = 6;
+                    return [2 /*return*/, commandReturnData];
                 case 6: return [4 /*yield*/, HelperFunctions_1.default.checkIfWeHaveControl(commandData, guildData_1)];
                 case 7:
                     doWeHaveControl = _g.sent();
