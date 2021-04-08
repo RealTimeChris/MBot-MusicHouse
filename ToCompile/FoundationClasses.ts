@@ -47,7 +47,7 @@ module FoundationClasses {
     export interface CommandReturnData {
         commandName: string;
     }
-    
+
     /**
          * Class representing a function/command.
          */
@@ -68,7 +68,7 @@ module FoundationClasses {
     * Base abstract class for Discord classes.
     */
     export abstract class DiscordEntity {
-        public abstract id: string = '';
+        public readonly abstract id: string = '';
         public abstract getFromDataBase(): Promise<void>;
         public abstract writeToDataBase(): Promise<void>;
     }
@@ -86,7 +86,7 @@ module FoundationClasses {
         public permsChannel: Discord.GuildChannel | null = null;
         public toTextChannel: Discord.WebhookClient | Discord.TextChannel | Discord.DMChannel |  null = null;
     
-        async initialize(client: Discord.Client, fromTextChannelID: string, fromTextChannelType: string, interaction: any = null, guildMemberID: string = '', guildID: string = ''): Promise<void>{
+        public async initialize(client: Discord.Client, fromTextChannelID: string, fromTextChannelType: string, interaction: any = null, guildMemberID: string = '', guildID: string = ''): Promise<void>{
             try{
                 this.fromTextChannelType = fromTextChannelType;
                 this.fromTextChannel = await client.channels.fetch(fromTextChannelID) as Discord.TextChannel | Discord.DMChannel;
