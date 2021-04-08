@@ -32,6 +32,37 @@ module FoundationClasses {
         voiceChannel: Discord.VoiceChannel | null;
         volume: number;        
     }
+    /**
+     * Class representing a function/command.
+     */
+     export interface BotCommand {
+        description: string | Discord.MessageEmbed;
+        function: Function;
+        name: string;
+    }
+
+    /**
+     * Class representing a command' return values.
+     */
+    export interface CommandReturnData {
+        commandName: string;
+    }
+    
+    /**
+         * Class representing a function/command.
+         */
+    export interface BotCommand {
+        description: string | Discord.MessageEmbed;
+        function: Function;
+        name: string;
+    }
+
+    /**
+     * Class representing a command' return values.
+     */
+    export interface CommandReturnData {
+        commandName: string;
+    }
 
     /**
     * Base abstract class for Discord classes.
@@ -95,22 +126,6 @@ module FoundationClasses {
                 })
             }
         }
-    }
-
-    /**
-     * Class representing a function/command.
-     */
-    export interface BotCommand {
-        description: string | Discord.MessageEmbed;
-        function: Function;
-        name: string;
-    }
-
-    /**
-     * Class representing a command' return values.
-     */
-    export interface CommandReturnData {
-        commandName: string;
     }
 }
 export default FoundationClasses;
