@@ -227,43 +227,61 @@ function playSongs(guildData, commandData, connection, discordUser) {
     });
 }
 function execute(commandData, discordUser) {
-    var _a, _b, _c, _d;
+    var _a, _b, _c, _d, _e, _f;
     return __awaiter(this, void 0, void 0, function () {
-        var commandReturnData, areWeInADM, checkIfAllowedInChannel, guildData, doWeHaveControl, userID_1, voiceChannel, msgString, msgEmbed, msg, permissions, msgString, msgEmbed, msg, msgString, msgEmbed, msg, guildMember, searchResults, finalSearchResultItems, x, msgEmbeds, msgEmbed, x, msgEmbed, field, embedFields, newMessage, currentPageIndex, reactionFilter, x, reactionCollection, messageEmbed, messageEmbed, messageEmbed, messageEmbed, newSong, msgEmbed, connection, connection, msgString, msgEmbed, newMessage, error_2;
-        var _e;
-        return __generator(this, function (_f) {
-            switch (_f.label) {
+        var commandReturnData, areWeInADM, checkIfAllowedInChannel, guildData, msgString, msgEmbed, msg, doWeHaveControl, userID_1, voiceChannel, msgString, msgEmbed, msg, permissions, msgString, msgEmbed, msg, msgString, msgEmbed, msg, guildMember, searchResults, finalSearchResultItems, x, msgEmbeds, msgEmbed, x, msgEmbed, field, embedFields, newMessage, currentPageIndex, reactionFilter, x, reactionCollection, messageEmbed, messageEmbed, messageEmbed, messageEmbed, newSong, msgEmbed, connection, connection, msgString, msgEmbed, newMessage, error_2;
+        var _g;
+        return __generator(this, function (_h) {
+            switch (_h.label) {
                 case 0:
-                    _f.trys.push([0, 54, , 55]);
+                    _h.trys.push([0, 57, , 58]);
                     commandReturnData = {
                         commandName: command.name
                     };
                     commandReturnData.commandName = command.name;
                     return [4 /*yield*/, HelperFunctions_1.default.areWeInADM(commandData)];
                 case 1:
-                    areWeInADM = _f.sent();
+                    areWeInADM = _h.sent();
                     if (areWeInADM === true) {
                         return [2 /*return*/, commandReturnData];
                     }
                     return [4 /*yield*/, HelperFunctions_1.default.checkIfAllowedInChannel(commandData, discordUser)];
                 case 2:
-                    checkIfAllowedInChannel = _f.sent();
+                    checkIfAllowedInChannel = _h.sent();
                     if (!checkIfAllowedInChannel) {
                         return [2 /*return*/, commandReturnData];
                     }
                     guildData = new GuildData_1.default({ dataBase: discordUser.dataBase, id: commandData.guild.id, name: commandData.guild.name, memberCount: commandData.guild.memberCount });
                     return [4 /*yield*/, guildData.getFromDataBase()];
                 case 3:
-                    _f.sent();
-                    return [4 /*yield*/, HelperFunctions_1.default.checkIfWeHaveControl(commandData, guildData)];
+                    _h.sent();
+                    if (!!((_b = commandData.fromTextChannel.permissionsFor((_a = commandData.guild) === null || _a === void 0 ? void 0 : _a.client.user)) === null || _b === void 0 ? void 0 : _b.has('MANAGE_MESSAGES'))) return [3 /*break*/, 6];
+                    msgString = "------\n**I need the Manage Messages permission in this channel, for this command!**\n------";
+                    msgEmbed = new Discord.MessageEmbed()
+                        .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
+                        .setColor(guildData.borderColor)
+                        .setDescription(msgString)
+                        .setTimestamp(Date())
+                        .setTitle('__**Permissions Issue:**__');
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 4:
-                    doWeHaveControl = _f.sent();
+                    msg = _h.sent();
+                    if (commandData.toTextChannel instanceof Discord.WebhookClient) {
+                        msg = new Discord.Message(commandData.guild.client, msg, commandData.fromTextChannel);
+                    }
+                    return [4 /*yield*/, msg.delete({ timeout: 20000 })];
+                case 5:
+                    _h.sent();
+                    _h.label = 6;
+                case 6: return [4 /*yield*/, HelperFunctions_1.default.checkIfWeHaveControl(commandData, guildData)];
+                case 7:
+                    doWeHaveControl = _h.sent();
                     if (!doWeHaveControl) {
                         return [2 /*return*/, commandReturnData];
                     }
                     userID_1 = commandData.guildMember.user.id;
                     voiceChannel = commandData.guildMember.voice.channel;
-                    if (!!voiceChannel) return [3 /*break*/, 7];
+                    if (!!voiceChannel) return [3 /*break*/, 10];
                     msgString = "------\n**You need to be in a voice channel to issue music commands!**\n------";
                     msgEmbed = new Discord.MessageEmbed()
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
@@ -272,72 +290,72 @@ function execute(commandData, discordUser) {
                         .setTimestamp(Date())
                         .setTitle('__**Voice Channel Issue:**__');
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
-                case 5:
-                    msg = _f.sent();
+                case 8:
+                    msg = _h.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         msg = new Discord.Message(commandData.guild.client, msg, commandData.fromTextChannel);
                     }
                     return [4 /*yield*/, msg.delete({ timeout: 20000 })];
-                case 6:
-                    _f.sent();
+                case 9:
+                    _h.sent();
                     return [2 /*return*/, commandReturnData];
-                case 7:
-                    if (!(guildData.playlist.voiceChannel === null)) return [3 /*break*/, 13];
+                case 10:
+                    if (!(guildData.playlist.voiceChannel === null)) return [3 /*break*/, 16];
                     return [4 /*yield*/, voiceChannel.join()];
-                case 8:
-                    _f.sent();
+                case 11:
+                    _h.sent();
                     guildData.playlist.textChannel = commandData.fromTextChannel;
                     guildData.playlist.voiceChannel = voiceChannel;
                     return [4 /*yield*/, guildData.writeToDataBase()];
-                case 9:
-                    _f.sent();
+                case 12:
+                    _h.sent();
                     permissions = voiceChannel.permissionsFor(commandData.guild.client.user);
-                    if (!(!permissions.has('CONNECT') || !permissions.has('SPEAK'))) return [3 /*break*/, 12];
+                    if (!(!permissions.has('CONNECT') || !permissions.has('SPEAK'))) return [3 /*break*/, 15];
                     msgString = "------\n**I need the permissions to join and speak in your voice channel!**\n------";
                     msgEmbed = new Discord.MessageEmbed()
-                        .setAuthor((_a = commandData.guildMember) === null || _a === void 0 ? void 0 : _a.user.username, commandData.guildMember.user.avatarURL())
+                        .setAuthor((_c = commandData.guildMember) === null || _c === void 0 ? void 0 : _c.user.username, commandData.guildMember.user.avatarURL())
                         .setColor(guildData.borderColor)
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Permissions Issues:**__');
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
-                case 10:
-                    msg = _f.sent();
+                case 13:
+                    msg = _h.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         msg = new Discord.Message(commandData.guild.client, msg, commandData.fromTextChannel);
                     }
                     return [4 /*yield*/, msg.delete({ timeout: 20000 })];
-                case 11:
-                    _f.sent();
+                case 14:
+                    _h.sent();
                     return [2 /*return*/, commandReturnData];
-                case 12: return [3 /*break*/, 16];
-                case 13:
-                    if (!(voiceChannel.id !== guildData.playlist.voiceChannel.id)) return [3 /*break*/, 16];
+                case 15: return [3 /*break*/, 19];
+                case 16:
+                    if (!(voiceChannel.id !== guildData.playlist.voiceChannel.id)) return [3 /*break*/, 19];
                     msgString = "------\n**You need to be in the correct voice channel to issue music commands!**\n------";
                     msgEmbed = new Discord.MessageEmbed()
-                        .setAuthor((_b = commandData.guildMember) === null || _b === void 0 ? void 0 : _b.user.username, commandData.guildMember.user.avatarURL())
+                        .setAuthor((_d = commandData.guildMember) === null || _d === void 0 ? void 0 : _d.user.username, commandData.guildMember.user.avatarURL())
                         .setColor(guildData.borderColor)
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Voice Channel Issue:**__');
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
-                case 14:
-                    msg = _f.sent();
+                case 17:
+                    msg = _h.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         msg = new Discord.Message(commandData.guild.client, msg, commandData.fromTextChannel);
                     }
                     return [4 /*yield*/, msg.delete({ timeout: 20000 })];
-                case 15:
-                    _f.sent();
-                    return [2 /*return*/, commandReturnData];
-                case 16: return [4 /*yield*/, ((_c = commandData.guild) === null || _c === void 0 ? void 0 : _c.members.fetch(commandData.guild.client.user.id))];
-                case 17:
-                    guildMember = _f.sent();
-                    guildMember.voice.setSelfDeaf(true);
-                    if (!(commandData.args[0] !== undefined && commandData.args[0] !== '')) return [3 /*break*/, 46];
-                    return [4 /*yield*/, ytsr(commandData.args[0])];
                 case 18:
-                    searchResults = _f.sent();
+                    _h.sent();
+                    return [2 /*return*/, commandReturnData];
+                case 19: return [4 /*yield*/, ((_e = commandData.guild) === null || _e === void 0 ? void 0 : _e.members.fetch(commandData.guild.client.user.id))];
+                case 20:
+                    guildMember = _h.sent();
+                    guildMember.voice.setSelfDeaf(true);
+                    if (!(commandData.args[0] !== undefined && commandData.args[0] !== '')) return [3 /*break*/, 49];
+                    return [4 /*yield*/, ytsr(commandData.args[0])];
+                case 21:
+                    searchResults = _h.sent();
                     finalSearchResultItems = [];
                     for (x = 0; x < searchResults.items.length; x += 1) {
                         if (searchResults.items[x].type === 'video') {
@@ -370,7 +388,7 @@ function execute(commandData, discordUser) {
                                 .setURL(finalSearchResultItems[x].url)
                                 .setTitle(x + 1 + " of " + finalSearchResultItems.length + "\n" + finalSearchResultItems[x].title + "\n")
                                 .setFooter('React with ✅ to add to your playlist');
-                            field = { name: '__**Duration:**__', value: "" + ((_d = finalSearchResultItems[x]) === null || _d === void 0 ? void 0 : _d.duration), inline: true };
+                            field = { name: '__**Duration:**__', value: "" + ((_f = finalSearchResultItems[x]) === null || _f === void 0 ? void 0 : _f.duration), inline: true };
                             embedFields = [];
                             embedFields.push(field);
                             msgEmbed.fields = embedFields;
@@ -378,8 +396,8 @@ function execute(commandData, discordUser) {
                         }
                     }
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbeds[0])];
-                case 19:
-                    newMessage = _f.sent();
+                case 22:
+                    newMessage = _h.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         newMessage = new Discord.Message(commandData.guild.client, newMessage, commandData.fromTextChannel);
                     }
@@ -391,93 +409,93 @@ function execute(commandData, discordUser) {
                     reactionFilter = function (reaction, user) { return (reaction.emoji.name === '◀️' || reaction.emoji.name === '▶️'
                         || reaction.emoji.name === '❌' || reaction.emoji.name === '✅') && user.id === userID_1; };
                     x = 0;
-                    _f.label = 20;
-                case 20:
-                    if (!(x < 1)) return [3 /*break*/, 42];
-                    return [4 /*yield*/, (newMessage === null || newMessage === void 0 ? void 0 : newMessage.awaitReactions(reactionFilter, { max: 1, time: 120000 }))];
-                case 21:
-                    reactionCollection = _f.sent();
-                    if (!(reactionCollection.first() === undefined || reactionCollection.first().emoji.name === '❌')) return [3 /*break*/, 23];
-                    return [4 /*yield*/, newMessage.reactions.removeAll()];
-                case 22:
-                    _f.sent();
-                    return [2 /*return*/, commandReturnData];
+                    _h.label = 23;
                 case 23:
-                    if (!(reactionCollection.first().emoji.name === '▶️' && (currentPageIndex === (msgEmbeds.length - 1)))) return [3 /*break*/, 26];
+                    if (!(x < 1)) return [3 /*break*/, 45];
+                    return [4 /*yield*/, (newMessage === null || newMessage === void 0 ? void 0 : newMessage.awaitReactions(reactionFilter, { max: 1, time: 120000 }))];
+                case 24:
+                    reactionCollection = _h.sent();
+                    if (!(reactionCollection.first() === undefined || reactionCollection.first().emoji.name === '❌')) return [3 /*break*/, 26];
+                    return [4 /*yield*/, newMessage.reactions.removeAll()];
+                case 25:
+                    _h.sent();
+                    return [2 /*return*/, commandReturnData];
+                case 26:
+                    if (!(reactionCollection.first().emoji.name === '▶️' && (currentPageIndex === (msgEmbeds.length - 1)))) return [3 /*break*/, 29];
                     reactionCollection.first().users.remove(userID_1);
                     currentPageIndex = 0;
                     messageEmbed = msgEmbeds[currentPageIndex];
                     return [4 /*yield*/, newMessage.edit(messageEmbed)];
-                case 24:
-                    _f.sent();
+                case 27:
+                    _h.sent();
                     guildData = new GuildData_1.default({ dataBase: discordUser.dataBase, id: commandData.guild.id, name: commandData.guild.name, memberCount: commandData.guild.memberCount });
                     return [4 /*yield*/, guildData.getFromDataBase()];
-                case 25:
-                    _f.sent();
-                    return [3 /*break*/, 41];
-                case 26:
-                    if (!(reactionCollection.first().emoji.name === '▶️' && (currentPageIndex < msgEmbeds.length))) return [3 /*break*/, 29];
+                case 28:
+                    _h.sent();
+                    return [3 /*break*/, 44];
+                case 29:
+                    if (!(reactionCollection.first().emoji.name === '▶️' && (currentPageIndex < msgEmbeds.length))) return [3 /*break*/, 32];
                     reactionCollection.first().users.remove(userID_1);
                     currentPageIndex += 1;
                     messageEmbed = msgEmbeds[currentPageIndex];
                     return [4 /*yield*/, newMessage.edit(messageEmbed)];
-                case 27:
-                    _f.sent();
+                case 30:
+                    _h.sent();
                     guildData = new GuildData_1.default({ dataBase: discordUser.dataBase, id: commandData.guild.id, name: commandData.guild.name, memberCount: commandData.guild.memberCount });
                     return [4 /*yield*/, guildData.getFromDataBase()];
-                case 28:
-                    _f.sent();
-                    return [3 /*break*/, 41];
-                case 29:
-                    if (!(reactionCollection.first().emoji.name === '◀️' && (currentPageIndex > 0))) return [3 /*break*/, 32];
+                case 31:
+                    _h.sent();
+                    return [3 /*break*/, 44];
+                case 32:
+                    if (!(reactionCollection.first().emoji.name === '◀️' && (currentPageIndex > 0))) return [3 /*break*/, 35];
                     reactionCollection.first().users.remove(userID_1);
                     currentPageIndex -= 1;
                     messageEmbed = msgEmbeds[currentPageIndex];
                     return [4 /*yield*/, newMessage.edit(messageEmbed)];
-                case 30:
-                    _f.sent();
+                case 33:
+                    _h.sent();
                     guildData = new GuildData_1.default({ dataBase: discordUser.dataBase, id: commandData.guild.id, name: commandData.guild.name, memberCount: commandData.guild.memberCount });
                     return [4 /*yield*/, guildData.getFromDataBase()];
-                case 31:
-                    _f.sent();
-                    return [3 /*break*/, 41];
-                case 32:
-                    if (!(reactionCollection.first().emoji.name === '◀️' && (currentPageIndex === 0))) return [3 /*break*/, 35];
+                case 34:
+                    _h.sent();
+                    return [3 /*break*/, 44];
+                case 35:
+                    if (!(reactionCollection.first().emoji.name === '◀️' && (currentPageIndex === 0))) return [3 /*break*/, 38];
                     reactionCollection.first().users.remove(userID_1);
                     currentPageIndex = msgEmbeds.length - 1;
                     messageEmbed = msgEmbeds[currentPageIndex];
                     return [4 /*yield*/, newMessage.edit(messageEmbed)];
-                case 33:
-                    _f.sent();
+                case 36:
+                    _h.sent();
                     guildData = new GuildData_1.default({ dataBase: discordUser.dataBase, id: commandData.guild.id, name: commandData.guild.name, memberCount: commandData.guild.memberCount });
                     return [4 /*yield*/, guildData.getFromDataBase()];
-                case 34:
-                    _f.sent();
-                    return [3 /*break*/, 41];
-                case 35:
-                    if (!(reactionCollection.first().emoji.name === '✅')) return [3 /*break*/, 41];
+                case 37:
+                    _h.sent();
+                    return [3 /*break*/, 44];
+                case 38:
+                    if (!(reactionCollection.first().emoji.name === '✅')) return [3 /*break*/, 44];
                     reactionCollection.first().users.remove(userID_1);
-                    _e = {
+                    _g = {
                         addedBy: commandData.guildMember.user.id,
                         name: finalSearchResultItems[currentPageIndex].title,
                         thumbnailURL: finalSearchResultItems[currentPageIndex].bestThumbnail.url
                     };
                     return [4 /*yield*/, ytdl.getInfo(finalSearchResultItems[currentPageIndex].id)];
-                case 36:
-                    newSong = (_e.url = (_f.sent()).videoDetails.video_url,
-                        _e.id = finalSearchResultItems[currentPageIndex].id,
-                        _e);
+                case 39:
+                    newSong = (_g.url = (_h.sent()).videoDetails.video_url,
+                        _g.id = finalSearchResultItems[currentPageIndex].id,
+                        _g);
                     guildData = new GuildData_1.default({ dataBase: discordUser.dataBase, id: commandData.guild.id, name: commandData.guild.name, memberCount: commandData.guild.memberCount });
                     return [4 /*yield*/, guildData.getFromDataBase()];
-                case 37:
-                    _f.sent();
+                case 40:
+                    _h.sent();
                     guildData.playlist.songs.push(newSong);
                     guildData.playlist.textChannel = commandData.fromTextChannel;
                     guildData.playlist.voiceChannel = voiceChannel;
                     guildData.playlist.volume = 5;
                     return [4 /*yield*/, guildData.writeToDataBase()];
-                case 38:
-                    _f.sent();
+                case 41:
+                    _h.sent();
                     msgEmbed = new Discord.MessageEmbed();
                     msgEmbed
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
@@ -487,31 +505,31 @@ function execute(commandData, discordUser) {
                         .setThumbnail(newSong.thumbnailURL)
                         .setDescription("__**New Song Added:**__ [" + newSong.name + "](" + newSong.url + ")\n__**Added By:**__ <@!" + newSong.addedBy + ">\n__**Position In Queue:**__ " + guildData.playlist.songs.length);
                     return [4 /*yield*/, newMessage.edit(msgEmbed)];
-                case 39:
-                    _f.sent();
+                case 42:
+                    _h.sent();
                     return [4 /*yield*/, newMessage.reactions.removeAll()];
-                case 40:
-                    _f.sent();
-                    return [3 /*break*/, 42];
-                case 41:
-                    x;
-                    return [3 /*break*/, 20];
-                case 42: return [4 /*yield*/, voiceChannel.join()];
                 case 43:
-                    connection = _f.sent();
-                    return [4 /*yield*/, playSongs(guildData, commandData, connection, discordUser)];
+                    _h.sent();
+                    return [3 /*break*/, 45];
                 case 44:
-                    _f.sent();
-                    return [4 /*yield*/, guildData.writeToDataBase()];
-                case 45:
-                    _f.sent();
-                    return [3 /*break*/, 53];
+                    x;
+                    return [3 /*break*/, 23];
+                case 45: return [4 /*yield*/, voiceChannel.join()];
                 case 46:
-                    if (!(commandData.args[0] === undefined || commandData.args[0] === '')) return [3 /*break*/, 53];
-                    return [4 /*yield*/, voiceChannel.join()];
+                    connection = _h.sent();
+                    return [4 /*yield*/, playSongs(guildData, commandData, connection, discordUser)];
                 case 47:
-                    connection = _f.sent();
-                    if (!(connection.dispatcher !== null)) return [3 /*break*/, 50];
+                    _h.sent();
+                    return [4 /*yield*/, guildData.writeToDataBase()];
+                case 48:
+                    _h.sent();
+                    return [3 /*break*/, 56];
+                case 49:
+                    if (!(commandData.args[0] === undefined || commandData.args[0] === '')) return [3 /*break*/, 56];
+                    return [4 /*yield*/, voiceChannel.join()];
+                case 50:
+                    connection = _h.sent();
+                    if (!(connection.dispatcher !== null)) return [3 /*break*/, 53];
                     msgString = "------\n__**We're already playing music!**__\n------";
                     msgEmbed = new Discord.MessageEmbed();
                     msgEmbed
@@ -521,34 +539,34 @@ function execute(commandData, discordUser) {
                         .setTitle('__**Already Playing:**__')
                         .setDescription(msgString);
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
-                case 48:
-                    newMessage = _f.sent();
+                case 51:
+                    newMessage = _h.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         newMessage = new Discord.Message(commandData.guild.client, newMessage, commandData.fromTextChannel);
                     }
                     return [4 /*yield*/, newMessage.delete({ timeout: 20000 })];
-                case 49:
-                    _f.sent();
+                case 52:
+                    _h.sent();
                     return [2 /*return*/, commandReturnData];
-                case 50:
+                case 53:
                     guildData.playlist.textChannel = commandData.fromTextChannel;
                     guildData.playlist.voiceChannel = voiceChannel;
                     guildData.playlist.volume = 5;
                     return [4 /*yield*/, guildData.writeToDataBase()];
-                case 51:
-                    _f.sent();
+                case 54:
+                    _h.sent();
                     playSongs(guildData, commandData, connection, discordUser);
                     return [4 /*yield*/, guildData.writeToDataBase()];
-                case 52:
-                    _f.sent();
-                    _f.label = 53;
-                case 53: return [2 /*return*/, commandReturnData];
-                case 54:
-                    error_2 = _f.sent();
+                case 55:
+                    _h.sent();
+                    _h.label = 56;
+                case 56: return [2 /*return*/, commandReturnData];
+                case 57:
+                    error_2 = _h.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_2);
                         })];
-                case 55: return [2 /*return*/];
+                case 58: return [2 /*return*/];
             }
         });
     });
