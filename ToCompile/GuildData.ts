@@ -35,7 +35,7 @@ export default class GuildData extends FoundationClasses.DiscordEntity {
         thumbnailURL:'', addedBy:'', id:''}, volume:5, voiceChannel: null, textChannel: null, 
         loopAll: false, loopSong:false, playNext: true};
 
-    async getFromDataBase(){
+    public async getFromDataBase(){
         try{
             const guildData = await this.dataBase.get(this.dataBaseKey) as GuildData;
             this.borderColor = guildData.borderColor;
@@ -50,7 +50,7 @@ export default class GuildData extends FoundationClasses.DiscordEntity {
             }
         }
     }
-    async writeToDataBase(){
+    public async writeToDataBase(){
         if (this.guildName === ''){
             const error = new Error();
             error.name = "Non-Initialized Structure";
