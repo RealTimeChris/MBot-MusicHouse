@@ -32,6 +32,7 @@ module FoundationClasses {
         voiceChannel: Discord.VoiceChannel | null;
         volume: number;        
     }
+    
     /**
      * Class representing a function/command.
      */

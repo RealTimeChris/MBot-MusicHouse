@@ -8,7 +8,6 @@
 import Discord = require('discord.js');
 import FoundationClasses from '../FoundationClasses';
 import DiscordUser from '../DiscordUser';
-import GuildData from '../GuildData';
 import HelperFunctions from '../HelperFunctions';
 
 const command: FoundationClasses.BotCommand = {
@@ -25,7 +24,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
        const commandReturnData: FoundationClasses.CommandReturnData = {
            commandName: command.name
        };
-       
+
        if (commandData.args[0]?.toLowerCase() !== 'janny' && commandData.args[0]?.toLowerCase() !== 'musichouse' && commandData.args[0]?.toLowerCase() !== 'gamehouse'){
         const msgString = '------\n**Please, enter the name of a bot as the first argument! (!displayguildsdata = BOTNAME)**\n------'
         const msgEmbed = new Discord.MessageEmbed();
