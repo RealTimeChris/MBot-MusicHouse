@@ -342,7 +342,6 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                     };
 
 		            await guildData.getFromDataBase();
-
                     guildData.playlist.songs.push(newSong);
                     guildData.playlist.textChannel = commandData.fromTextChannel as Discord.TextChannel;
                     guildData.playlist.voiceChannel = voiceChannel;
