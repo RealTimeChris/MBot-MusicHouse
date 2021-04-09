@@ -17,9 +17,9 @@ class Data{
 }
 
 class DeletedCounter {
-	deletedCount: number = 0;
+	private deletedCount: number = 0;
 
-	data: Data = new Data();
+	private data: Data = new Data();
 
 	setData(key: string, value: any): void {
 		const newData = new Data();
@@ -148,7 +148,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 			console.log(key + ' = ' + value);
             if (key.includes(dbKey)){
 				deletedCounter.setData(key, value);
-				await onData(dbKey, discordUser, deletedCounter)
+				await onData(dbKey, discordUser, deletedCounter);
 			}
         }
 
