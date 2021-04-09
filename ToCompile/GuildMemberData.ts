@@ -32,7 +32,7 @@ export default class GuildMemberData extends FoundationClasses.DiscordEntity {
     public readonly id: string;
     public readonly userName: string;
     
-    public async getFromDataBase(){
+    public async getFromDataBase(): Promise<void> {
         try{
             const guildMemberData = await this.dataBase.get(this.dataBaseKey) as GuildMemberData;
         }
@@ -43,7 +43,7 @@ export default class GuildMemberData extends FoundationClasses.DiscordEntity {
             }
         }
     }
-    public async writeToDataBase(){
+    public async writeToDataBase(): Promise<void> {
         if (this.userName === ''|| this.displayName === ''){
             const error = new Error();
             error.name = "Non-Initialized Structure";
