@@ -157,7 +157,6 @@ module HelperFunctions{
                 for (let x = 0; x < guildData.musicChannelIDs.length; x += 1) {
                     if (commandData.fromTextChannel!.id === guildData.musicChannelIDs[x]) {
                         isItFound = true;
-                        console.log('WE\'RE HERE!');
                         break;
                     } else {
                         msgString += `<#${guildData.musicChannelIDs[x]}>\n`;
