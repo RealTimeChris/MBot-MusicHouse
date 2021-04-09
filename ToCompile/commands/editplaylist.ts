@@ -72,7 +72,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
         const guildData = new GuildData({dataBase: discordUser.dataBase, id: commandData.guild!.id, name: commandData.guild!.name, memberCount: commandData.guild!.memberCount});
         await guildData.getFromDataBase();
 
-        if (!(commandData.fromTextChannel as Discord.TextChannel).permissionsFor(commandData.guild?.client.user as Discord.User)?.has('MANAGE_MESSAGES')){
+        if (!(commandData.fromTextChannel as Discord.TextChannel).permissionsFor(commandData.guild?.client.user as Discord.User)?.has('MANAGE_MESSAGES')) {
 			const msgString = `------\n**I need the Manage Messages permission in this channel, for this command!**\n------`;
 			let msgEmbed = new Discord.MessageEmbed()
 				.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
@@ -81,7 +81,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Permissions Issue:**__')
 			let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-			if (commandData.toTextChannel instanceof Discord.WebhookClient){
+			if (commandData.toTextChannel instanceof Discord.WebhookClient) {
 				msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
 			}
 			await msg.delete({timeout: 20000});
@@ -105,14 +105,14 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                 .setTimestamp(Date() as unknown as Date)
                 .setTitle('__**Voice Channel Issue:**__');
             let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-            if (commandData.toTextChannel instanceof Discord.WebhookClient){
+            if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                 msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
             }
             await msg.delete({timeout: 20000});
             return commandReturnData;
         }
 
-        if (guildData.playlist.voiceChannel === null){
+        if (guildData.playlist.voiceChannel === null) {
             await voiceChannel.join();
             guildData.playlist.textChannel = commandData.fromTextChannel as Discord.TextChannel;
             guildData.playlist.voiceChannel = voiceChannel;
@@ -127,7 +127,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                     .setTimestamp(Date() as unknown as Date)
                     .setTitle('__**Permissions Issues:**__');
                 let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-                if (commandData.toTextChannel instanceof Discord.WebhookClient){
+                if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                     msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
                 }
                 await msg.delete({timeout: 20000});
@@ -143,7 +143,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                 .setTimestamp(Date() as unknown as Date)
                 .setTitle('__**Voice Channel Issue:**__');
             let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-            if (commandData.toTextChannel instanceof Discord.WebhookClient){
+            if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                 msg = new Discord.Message((commandData.guild as Discord.Guild).client, msg, commandData.fromTextChannel as Discord.TextChannel);
             }
             await msg.delete({timeout: 20000});
@@ -153,7 +153,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
         let currentPageIndex = 0;
         let newMessage: Discord.Message;
         newMessage = await HelperFunctions.sendMessageWithCorrectChannel(commandData, `<@!${commandData.guildMember?.id}>`);
-        if (commandData.toTextChannel instanceof Discord.WebhookClient){
+        if (commandData.toTextChannel instanceof Discord.WebhookClient) {
             newMessage = new Discord.Message(commandData.guild!.client, newMessage, commandData.fromTextChannel!);
         }        
 
@@ -232,9 +232,9 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                 const messageEmbed = msgEmbeds[currentPageIndex];
                 await newMessage.edit(messageEmbed!);
             }
-            else if (reaction.emoji.name === '✅'){
+            else if (reaction.emoji.name === '✅') {
                 await reaction!.users.remove(userID);
-                for (let x = 0; x < msgEmbeds.length; x += 1){
+                for (let x = 0; x < msgEmbeds.length; x += 1) {
                     msgEmbeds[x]!.description = "__Type 'remove <trackNumber>' to remove a track.\nType 'swap <sourceTrackNumber> <destinationTrackNumber>'"+
                         "to swap tracks.\nType 'shuffle' to shuffle the playlist.\nType 'exit' to exit.__\n";
                     msgEmbeds[x]!.setFooter("Type 'remove <trackNumber>' to remove a track.\nType 'swap <sourceTrackNumber> <destinationTrackNumber>' to swap"+
@@ -254,7 +254,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 
                     if (args2[0]!.toLowerCase() !== 'remove' && args2[0]!.toLowerCase() !== 'swap' && args2[0]!.toLowerCase() !== 'exit'
                         && args2[0]!.toLowerCase() !== 'shuffle') {
-                        for (let x = 0; x < msgEmbeds.length; x += 1){
+                        for (let x = 0; x < msgEmbeds.length; x += 1) {
                             msgEmbeds[x]!.description = "__**PLEASE ENTER A PROPER INPUT!**__\n__Type 'remove <trackNumber>' to remove a track.\nType 'swap <sourceTrackNumber>"+
                                 " <destinationTrackNumber>' to swap tracks.\nType 'shuffle' to shuffle the playlist."
                             + '\nType exit to exit.__\n';
@@ -267,7 +267,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                     } else if (args2[0]!.toLowerCase() === 'remove') {
                         if ((parseInt(args2[1]!, 10) - 1) < 0 || (parseInt(args2[1]!, 10) - 1)
                                 >= guildData.playlist.songs.length || args2[1]! === undefined) {
-                            for (let x = 0; x < msgEmbeds.length; x += 1){
+                            for (let x = 0; x < msgEmbeds.length; x += 1) {
                                 msgEmbeds[x]!.description = "__**PLEASE ENTER A PROPER INPUT!**__\n__Type 'remove <trackNumber>' to remove a track.\nType 'swap <sourceTrackNumber>"+
                                     " <destinationTrackNumber>' to swap tracks.\nType 'shuffle' to shuffle the playlist."
                                 + '\nType exit to exit.__\n';
@@ -296,7 +296,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                                 >= guildData.playlist.songs.length || (parseInt(args2[2]!, 10) - 1)
                                 < 0 || (parseInt(args2[2]!, 10) - 1) >= guildData.playlist.songs.length
                                 || args2[1]! === undefined || args2[2]! === undefined) {
-                            for (let x = 0; x < msgEmbeds.length; x += 1){
+                            for (let x = 0; x < msgEmbeds.length; x += 1) {
                                 msgEmbeds[x]!.description = "__**PLEASE ENTER A PROPER INPUT!**__\n__Type 'remove <trackNumber>' to remove a track.\nType 'swap"+
                                     " <sourceTrackNumber> <destinationTrackNumber>' to swap tracks.\nType 'shuffle' to shuffle the playlist."
                                 + '\nType exit to exit.__\n';

@@ -55,14 +55,14 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             	.setTimestamp(Date() as unknown as Date)
             	.setTitle('__**Voice Channel Issue:**__');
         	let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-        	if (commandData.toTextChannel instanceof Discord.WebhookClient){
+        	if (commandData.toTextChannel instanceof Discord.WebhookClient) {
             	msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
         	}
         	await msg.delete({timeout: 20000});
         	return commandReturnData;
         }
 
-        if (guildData.playlist.voiceChannel === null){
+        if (guildData.playlist.voiceChannel === null) {
 			const msgString = `------\n**Therer is already no music playing as I am not in any voice channels!**\n------`;
 			let msgEmbed = new Discord.MessageEmbed()
 				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
@@ -71,7 +71,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Stopping Issue:**__');
 			let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-			if (commandData.toTextChannel instanceof Discord.WebhookClient){
+			if (commandData.toTextChannel instanceof Discord.WebhookClient) {
 				msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
 			}
 			await msg.delete({timeout: 20000});
@@ -86,7 +86,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                 .setTimestamp(Date() as unknown as Date)
                 .setTitle('__**Voice Channel Issue:**__');
             let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-            if (commandData.toTextChannel instanceof Discord.WebhookClient){
+            if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                 msg = new Discord.Message((commandData.guild as Discord.Guild).client, msg, commandData.fromTextChannel as Discord.TextChannel);
             }
             await msg.delete({timeout: 20000});
@@ -95,7 +95,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 
 		const vchannel = commandData.guild?.client.channels.resolve(guildData.playlist.voiceChannel!.id) as Discord.VoiceChannel;
 		vchannel.leave();
-		if ((guildData.playlist.loopAll === true || guildData.playlist.loopSong === true) && guildData.playlist.currentSong.id !== ''){
+		if ((guildData.playlist.loopAll === true || guildData.playlist.loopSong === true) && guildData.playlist.currentSong.id !== '') {
 			guildData.playlist.songs.unshift(guildData.playlist.currentSong);
 		}
 		guildData.playlist.playNext = true;

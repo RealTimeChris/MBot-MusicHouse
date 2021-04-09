@@ -5,8 +5,8 @@
 
 'use strict';
 
-import FoundationClasses from './FoundationClasses';
 import Level from 'level-ts';
+import FoundationClasses from './FoundationClasses';
 
 /**
  * Class representing the startup values of a guild data structure.
@@ -43,7 +43,7 @@ export default class GuildData extends FoundationClasses.DiscordEntity {
             this.musicChannelIDs = guildData.musicChannelIDs;
             this.playlist = guildData.playlist;
         }
-        catch(error){
+        catch(error) {
             if (error.type === 'NotFoundError') {
                 console.log(`No entry found for guild by the Id of ${this.id} with name of ${this.guildName}, creating one!`);
                 console.log(this);
@@ -51,7 +51,7 @@ export default class GuildData extends FoundationClasses.DiscordEntity {
         }
     }
     public async writeToDataBase(): Promise<void> {
-        if (this.guildName === ''){
+        if (this.guildName === '') {
             const error = new Error();
             error.name = "Non-Initialized Structure";
             error.message = "You've forgotten to initialize the GuildData structure!";
@@ -68,7 +68,7 @@ export default class GuildData extends FoundationClasses.DiscordEntity {
         this.guildName = initData.name.trim();
         this.id = initData.id.trim();
         this.memberCount = initData.memberCount;
-        if (!IdRegExp.test(this.id)){
+        if (!IdRegExp.test(this.id)) {
             const error = new Error();
             error.name = "Guild Id Issue";
             error.message = "You've passed an invalid guild Id to the constructor:\n" + this.id;

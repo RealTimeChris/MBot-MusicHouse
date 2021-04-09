@@ -55,14 +55,14 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                 .setTimestamp(Date() as unknown as Date)
                 .setTitle('__**Voice Channel Issue:**__');
             let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-            if (commandData.toTextChannel instanceof Discord.WebhookClient){
+            if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                 msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
             }
             await msg.delete({timeout: 20000});
             return commandReturnData;
         }
 
-        if (guildData.playlist.voiceChannel === null){
+        if (guildData.playlist.voiceChannel === null) {
             await voiceChannel.join();
             guildData.playlist.textChannel = commandData.fromTextChannel as Discord.TextChannel;
             guildData.playlist.voiceChannel = voiceChannel;
@@ -77,7 +77,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                     .setTimestamp(Date() as unknown as Date)
                     .setTitle('__**Permissions Issues:**__');
                 let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-                if (commandData.toTextChannel instanceof Discord.WebhookClient){
+                if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                     msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
                 }
                 await msg.delete({timeout: 20000});
@@ -93,7 +93,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                 .setTimestamp(Date() as unknown as Date)
                 .setTitle('__**Voice Channel Issue:**__');
             let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-            if (commandData.toTextChannel instanceof Discord.WebhookClient){
+            if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                 msg = new Discord.Message((commandData.guild as Discord.Guild).client, msg, commandData.fromTextChannel as Discord.TextChannel);
             }
             await msg.delete({timeout: 20000});
@@ -110,7 +110,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 				.setTitle('__**Skip Song Failure:**__')
 				.setDescription('------\n**There needs to be music playing for you to be able to skip!**\n------');
 			let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-			if (commandData.toTextChannel instanceof Discord.WebhookClient){
+			if (commandData.toTextChannel instanceof Discord.WebhookClient) {
 				msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
 			}
 			await msg.delete({timeout: 20000});
@@ -127,7 +127,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 			.setTimestamp(Date() as unknown as Date)
 			.setTitle('__**Song Skipping:**__');
 		let newMessage = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-		if (commandData.toTextChannel instanceof Discord.WebhookClient){
+		if (commandData.toTextChannel instanceof Discord.WebhookClient) {
 			newMessage = new Discord.Message(commandData.guild!.client, newMessage, commandData.fromTextChannel!);
 		}
 		await newMessage.delete({timeout: 5000});

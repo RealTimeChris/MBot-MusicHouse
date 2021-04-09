@@ -12,7 +12,7 @@ import GuildData from './GuildData';
 import botCommands from './CommandIndex';
 
 module IndexFunctions{
-    export async function onReady(client: any, discordUser: DiscordUser){
+    export async function onReady(client: any, discordUser: DiscordUser) {
         try {
             await discordUser.initializeInstance(client);
             await (client.user as Discord.ClientUser).setPresence({ status: 'online', activity: { name: '!help for commands!', type: 'STREAMING' } });
@@ -21,7 +21,7 @@ module IndexFunctions{
         }
     }
 
-    export async function onMessage(msg: Discord.Message, client: any, discordUser: DiscordUser){
+    export async function onMessage(msg: Discord.Message, client: any, discordUser: DiscordUser) {
         if (client.users.resolve(msg.author.id) === null) {
             console.log('Non-found user! Better escape!');
             return;
@@ -43,12 +43,12 @@ module IndexFunctions{
                 }
             }
     
-            if (!botCommands.has(command)){
+            if (!botCommands.has(command)) {
                 return;
             }
             try{
                 const commandData = new FoundationClasses.CommandData();
-                if (msg.channel.type !== 'dm' && msg.member !== null){
+                if (msg.channel.type !== 'dm' && msg.member !== null) {
                     await commandData.initialize(client, msg.channel.id, msg.channel.type, null, msg.member?.id, msg.guild?.id);
                 }
                 else{
@@ -56,7 +56,7 @@ module IndexFunctions{
                 }
                 commandData.args = args;
         
-                if (msg.deletable){
+                if (msg.deletable) {
                     await msg.delete();
                 }
         
@@ -71,7 +71,7 @@ module IndexFunctions{
                 await discordUser.saveCacheIfTimeHasPassed(client);
                 return;
             }
-            catch(error){
+            catch(error) {
                 console.log(error);
             }
             
@@ -94,7 +94,7 @@ module IndexFunctions{
                 await discordUser.saveCacheIfTimeHasPassed(client);
                 return;
             }
-            catch(error){
+            catch(error) {
                 console.log(error);
             }		
         }
@@ -106,7 +106,7 @@ module IndexFunctions{
             const channel = await client.channels.fetch(channel_id);
             let id_full, guild_id_full, options_full, name_full;
             const commandData = new FoundationClasses.CommandData();
-            if (await channel.type === 'dm'){
+            if (await channel.type === 'dm') {
                 let {user:{id}, guild_id, data:{options, name}} = interaction;
                 id_full = id;
                 guild_id_full = guild_id;
@@ -122,40 +122,40 @@ module IndexFunctions{
                 name_full = name;
                 await commandData.initialize(client, channel_id, channel.type, interaction, id_full, guild_id_full);
             }
-            if (name_full === 'botinfo'){
+            if (name_full === 'botinfo') {
                 const name = 'musichouse';
                 commandData.args[0] = name;
             }
             const nameSolid = name_full;
-            if (name_full === 'clear'){
+            if (name_full === 'clear') {
         
             }
-            if (name_full === "deletedbentry"){
+            if (name_full === "deletedbentry") {
                 const {value:value1} = options_full[0];
                 commandData.args[0] = 'musichouse';
                 commandData.args[1] = value1;
             }
-            if (name_full === "displayguildsdata"){
+            if (name_full === "displayguildsdata") {
                 const name = 'musichouse';
                 commandData.args[0] = name;
             }
-            if (name_full === 'djrole'){
+            if (name_full === 'djrole') {
                 name_full = options_full[0].name;
-                if (name_full === 'remove'){
+                if (name_full === 'remove') {
                     commandData.args[0] = 'remove';
                 }
-                else if (name_full === 'display'){
+                else if (name_full === 'display') {
                     
                 }
-                else if (name_full === 'add'){
+                else if (name_full === 'add') {
                     const roleID = options_full[0].options[0].value;
                     commandData.args[0] = 'add';
                     commandData.args[1] = roleID;
                 }
-                else if (name_full === 'create'){
+                else if (name_full === 'create') {
                     const roleName = options_full[0].options[0].value;
                     let roleColor;
-                    if (options_full[0].options[1] !== undefined){
+                    if (options_full[0].options[1] !== undefined) {
                         roleColor = options_full[0].options[1].value;
                     }
                     commandData.args[0] = 'create';
@@ -163,42 +163,42 @@ module IndexFunctions{
                     commandData.args[2] = roleColor;
                 }
             }
-            if (name_full === 'editplaylist'){
+            if (name_full === 'editplaylist') {
         
             }
-            if (name_full === 'help'){
-                if (options_full[0].options !==  undefined){
+            if (name_full === 'help') {
+                if (options_full[0].options !==  undefined) {
                     const {value} = options_full[0].options[0];
                     commandData.args[0] = value;
                 }
             }
-            if (name_full === 'listdbguilds'){
+            if (name_full === 'listdbguilds') {
                 commandData.args[0] = 'musichouse';
             }
-            if (name_full === 'loop'){
+            if (name_full === 'loop') {
                 const areWeLooping = options_full[0].value;
                 commandData.args[0] = areWeLooping;
             }
-            if (name_full === 'loopsong'){
+            if (name_full === 'loopsong') {
                 const areWeLooping = options_full[0].value;
                 commandData.args[0] = areWeLooping;
             }
-            if (name_full === 'musichouseoptions'){
+            if (name_full === 'musichouseoptions') {
         
             }
-            if (name_full == 'play'){
-                if (options_full !== undefined){
+            if (name_full == 'play') {
+                if (options_full !== undefined) {
                     const songName = options_full[0].value;
                     commandData.args[0] = songName;
                 }
             }
-            if (name_full === 'playrn'){
-                if (options_full !== undefined){
+            if (name_full === 'playrn') {
+                if (options_full !== undefined) {
                     const songName = options_full[0].value;
                     commandData.args[0] = songName;
                 }
             }
-            if (name_full === 'setbordercolor'){
+            if (name_full === 'setbordercolor') {
                 commandData.args[0] = 'musichouse';
                 const redChannelValue = options_full[0].value;
                 const greenChannelValue = options_full[1].value;
@@ -207,34 +207,34 @@ module IndexFunctions{
                 commandData.args[2] = greenChannelValue.toString();
                 commandData.args[3] = blueChannelValue.toString();
             }
-            if (name_full === 'setmusicchannel'){
+            if (name_full === 'setmusicchannel') {
                 name_full = options_full[0].name;
-                if (name_full === 'add'){
+                if (name_full === 'add') {
                     commandData.args[0] = 'add';
                 }
-                else if (name_full === 'remove'){
+                else if (name_full === 'remove') {
                     commandData.args[0] = 'remove';
                 }
-                else if (name_full === 'display'){
+                else if (name_full === 'display') {
         
                 }
-                else if (name_full === 'purge'){
+                else if (name_full === 'purge') {
                     commandData.args[0] = 'purge';
                 }
             }
-            if (name_full === 'shuffle'){
+            if (name_full === 'shuffle') {
         
             }
-            if (name_full === 'skip'){
+            if (name_full === 'skip') {
         
             }
-            if (name_full === 'slashcommands'){
+            if (name_full === 'slashcommands') {
         
             }
-            if (name_full === 'stop'){
+            if (name_full === 'stop') {
         
             }
-            if (name_full === 'test'){
+            if (name_full === 'test') {
         
             }
             await client.api.interactions(interaction.id, interaction.token).callback.post({
@@ -242,21 +242,21 @@ module IndexFunctions{
                     type: 5
                 }
             });
-            if (commandData.guildMember instanceof Discord.GuildMember){
+            if (commandData.guildMember instanceof Discord.GuildMember) {
                 console.log(`Command: '${nameSolid}' entered by user: ${commandData.guildMember.user.username}`);
             }
-            else if (commandData.guildMember instanceof Discord.User){
+            else if (commandData.guildMember instanceof Discord.User) {
                 console.log(`Command: '${nameSolid}' entered by user: ${commandData.guildMember.username}`);
             }	
             const returnData = await botCommands.get(nameSolid)?.function(commandData, discordUser) as FoundationClasses.CommandReturnData;
             console.log(`Completed Command: ${returnData.commandName}`);
         }
-        catch(error){
+        catch(error) {
             console.log(error);
         }
     }
 
-    export async function onVoiceStatusUpdate(newVoiceState: Discord.VoiceState, client: any, discordUser: DiscordUser){
+    export async function onVoiceStatusUpdate(newVoiceState: Discord.VoiceState, client: any, discordUser: DiscordUser) {
         try {
             const guildData = new GuildData({dataBase: discordUser.dataBase, id: newVoiceState.guild!.id, name: newVoiceState.guild!.name, memberCount: newVoiceState.guild!.memberCount});
             await guildData.getFromDataBase();
@@ -267,7 +267,7 @@ module IndexFunctions{
                 setTimeout(async () => {
                     auditLogsEntry = guildAuditLogs.entries.find((auditLogEntry: Discord.GuildAuditLogsEntry) =>
                     auditLogEntry.action === 'MEMBER_DISCONNECT' && Date.now() - auditLogEntry.createdTimestamp < 5000)!;
-                    if (auditLogsEntry !== undefined){
+                    if (auditLogsEntry !== undefined) {
                         const msgEmbed = new Discord.MessageEmbed();
                         msgEmbed
                             .setColor(guildData.borderColor  as [number, number, number])
@@ -277,7 +277,7 @@ module IndexFunctions{
                             .setAuthor(client.user.username, client.user.avatarURL());
                         await currentTextChannel.send(msgEmbed);
                     }
-                    if (guildData.playlist.loopAll === true || guildData.playlist.loopSong === true){
+                    if (guildData.playlist.loopAll === true || guildData.playlist.loopSong === true) {
                         guildData.playlist.songs.unshift(guildData.playlist.currentSong);
                     }
                     guildData.playlist.voiceChannel = null;
@@ -301,7 +301,7 @@ module IndexFunctions{
                         .setAuthor(client.user.username, client.user.avatarURL());
                     const newMsg = await currentTextChannel.send(msgEmbed);
                     currentVoiceChannel.leave();
-                    if ((guildData.playlist.loopAll === true || guildData.playlist.loopSong === true) && guildData.playlist.currentSong.id !== ''){
+                    if ((guildData.playlist.loopAll === true || guildData.playlist.loopSong === true) && guildData.playlist.currentSong.id !== '') {
                         guildData.playlist.songs.unshift(guildData.playlist.currentSong);
                     }
                     guildData.playlist.voiceChannel = null;
@@ -313,7 +313,7 @@ module IndexFunctions{
                 }
             }
     
-            if (newVoiceState.selfDeaf === false){
+            if (newVoiceState.selfDeaf === false) {
                 const guildMember = newVoiceState.member;
                 guildMember!.voice.setSelfDeaf(true);
             }

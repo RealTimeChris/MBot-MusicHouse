@@ -55,14 +55,14 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                 .setTimestamp(Date() as unknown as Date)
                 .setTitle('__**Voice Channel Issue:**__');
             let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-            if (commandData.toTextChannel instanceof Discord.WebhookClient){
+            if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                 msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
             }
             await msg.delete({timeout: 20000});
             return commandReturnData;
         }
 
-        if (guildData.playlist.voiceChannel === null){
+        if (guildData.playlist.voiceChannel === null) {
             await voiceChannel.join();
             guildData.playlist.textChannel = commandData.fromTextChannel as Discord.TextChannel;
             guildData.playlist.voiceChannel = voiceChannel;
@@ -77,7 +77,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                     .setTimestamp(Date() as unknown as Date)
                     .setTitle('__**Permissions Issues:**__');
                 let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-                if (commandData.toTextChannel instanceof Discord.WebhookClient){
+                if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                     msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
                 }
                 await msg.delete({timeout: 20000});
@@ -93,7 +93,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                 .setTimestamp(Date() as unknown as Date)
                 .setTitle('__**Voice Channel Issue:**__');
             let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-            if (commandData.toTextChannel instanceof Discord.WebhookClient){
+            if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                 msg = new Discord.Message((commandData.guild as Discord.Guild).client, msg, commandData.fromTextChannel as Discord.TextChannel);
             }
             await msg.delete({timeout: 20000});
@@ -101,7 +101,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
         }
         
         let areWeLooping;
-        if (commandData.args[0]?.toString().toLowerCase() !== 'true' && commandData.args[0]?.toString().toLowerCase() !== 'false'){
+        if (commandData.args[0]?.toString().toLowerCase() !== 'true' && commandData.args[0]?.toString().toLowerCase() !== 'false') {
             const msgString = `------\n**Please, enter either true or false as the first argument to the function!**\n------`;
             let msgEmbed = new Discord.MessageEmbed()
                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
@@ -110,19 +110,19 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                 .setTimestamp(Date() as unknown as Date)
                 .setTitle('__**Missing Or Invalid Arguments:**__')
             let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-            if (commandData.toTextChannel instanceof Discord.WebhookClient){
+            if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                 msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
             }
             await msg.delete({timeout: 20000})
         }
-        else if (commandData.args[0].toString().toLowerCase() === 'true'){
+        else if (commandData.args[0].toString().toLowerCase() === 'true') {
             areWeLooping = true;
         }
-        else if (commandData.args[0].toString().toLowerCase() === 'false'){
+        else if (commandData.args[0].toString().toLowerCase() === 'false') {
             areWeLooping = false;
         }
         
-        if (areWeLooping === true){
+        if (areWeLooping === true) {
             guildData.playlist.loopAll = true;
             const msgEmbed = new Discord.MessageEmbed();
             msgEmbed
@@ -133,7 +133,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                 .setDescription('------\n__**You\'ve enabled looping playback of the current playlist**__\n------');
             await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
         }
-        else if (areWeLooping === false){
+        else if (areWeLooping === false) {
             guildData.playlist.loopAll = false;
             const msgEmbed = new Discord.MessageEmbed();
             msgEmbed
