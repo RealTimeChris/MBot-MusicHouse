@@ -234,16 +234,21 @@ var HelperFunctions;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        _a.trys.push([0, 4, , 5]);
+                        _a.trys.push([0, 5, , 6]);
                         guildData = new GuildData_1.default({ dataBase: discordUser.dataBase, id: commandData.guild.id, name: commandData.guild.name, memberCount: commandData.guild.memberCount });
+                        return [4 /*yield*/, guildData.getFromDataBase()];
+                    case 1:
+                        _a.sent();
                         isItFound = true;
-                        if (!(guildData.musicChannelIDs.length > 0)) return [3 /*break*/, 3];
+                        console.log(guildData.musicChannelIDs.length);
+                        if (!(guildData.musicChannelIDs.length > 0)) return [3 /*break*/, 4];
                         isItFound = false;
                         msgString = "------\n**Sorry, but please do that in one of the following channels:**\n------\n";
                         msgEmbed = new Discord.MessageEmbed();
                         for (x = 0; x < guildData.musicChannelIDs.length; x += 1) {
                             if (commandData.fromTextChannel.id === guildData.musicChannelIDs[x]) {
                                 isItFound = true;
+                                console.log('WE\'RE HERE!');
                                 break;
                             }
                             else {
@@ -251,7 +256,7 @@ var HelperFunctions;
                             }
                         }
                         msgString += '------';
-                        if (!(isItFound === false)) return [3 /*break*/, 3];
+                        if (!(isItFound === false)) return [3 /*break*/, 4];
                         msgEmbed
                             .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
                             .setColor(guildData.borderColor)
@@ -259,22 +264,22 @@ var HelperFunctions;
                             .setTimestamp(Date())
                             .setTitle("__**Permissions Issue:**__");
                         return [4 /*yield*/, sendMessageWithCorrectChannel(commandData, msgEmbed)];
-                    case 1:
+                    case 2:
                         msg = _a.sent();
                         if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                             msg = new Discord.Message(commandData.guildMember.client, msg, commandData.fromTextChannel);
                         }
                         return [4 /*yield*/, msg.delete({ timeout: 20000 })];
-                    case 2:
+                    case 3:
                         _a.sent();
                         return [2 /*return*/, isItFound];
-                    case 3: return [2 /*return*/, isItFound];
-                    case 4:
+                    case 4: return [2 /*return*/, isItFound];
+                    case 5:
                         error_4 = _a.sent();
                         return [2 /*return*/, new Promise(function (resolve, reject) {
                                 reject(error_4);
                             })];
-                    case 5: return [2 /*return*/];
+                    case 6: return [2 /*return*/];
                 }
             });
         });

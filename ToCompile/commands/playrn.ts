@@ -107,7 +107,11 @@ async function playSongs(guildData: GuildData, commandData: FoundationClasses.Co
 				        .setDescription(msgString)
 				        .setTimestamp(Date() as unknown as Date)
 				        .setTitle('__**Playback Error:**__')
-			        await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
+			        let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
+					if (commandData.toTextChannel instanceof Discord.WebhookClient){
+						msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
+					}
+					await msg.delete({timeout: 20000});
 				});
 
 			dispatcher.setVolumeLogarithmic(guildData.playlist.volume / 5);

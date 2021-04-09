@@ -145,7 +145,6 @@ function execute(commandData, discordUser) {
                 case 13:
                     vchannel = (_c = commandData.guild) === null || _c === void 0 ? void 0 : _c.client.channels.resolve(guildData.playlist.voiceChannel.id);
                     vchannel.leave();
-                    console.log(guildData.playlist.currentSong.id);
                     if ((guildData.playlist.loopAll === true || guildData.playlist.loopSong === true) && guildData.playlist.currentSong.id !== '') {
                         guildData.playlist.songs.unshift(guildData.playlist.currentSong);
                     }

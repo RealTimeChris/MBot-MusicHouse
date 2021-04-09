@@ -148,6 +148,7 @@ module HelperFunctions{
     export async function checkIfAllowedInChannel(commandData: FoundationClasses.CommandData, discordUser: DiscordUser): Promise<boolean> {
         try {
             const guildData = new GuildData({dataBase: discordUser.dataBase, id: commandData.guild!.id, name: commandData.guild!.name, memberCount: commandData.guild!.memberCount});
+            await guildData.getFromDataBase();
             let isItFound = true;
             if (guildData.musicChannelIDs.length > 0) {
                 isItFound = false;
@@ -156,6 +157,7 @@ module HelperFunctions{
                 for (let x = 0; x < guildData.musicChannelIDs.length; x += 1) {
                     if (commandData.fromTextChannel!.id === guildData.musicChannelIDs[x]) {
                         isItFound = true;
+                        console.log('WE\'RE HERE!');
                         break;
                     } else {
                         msgString += `<#${guildData.musicChannelIDs[x]}>\n`;

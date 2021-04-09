@@ -59,12 +59,12 @@ var command = {
 function playSongs(guildData, commandData, connection, discordUser) {
     var _a, _b;
     return __awaiter(this, void 0, void 0, function () {
-        var guildDataNew_1, msgEmbed, vchannel, dispatcher, song_1, footerString_1, songOne, songOne, _c, _d, error_1, msgString, msgEmbed, msg;
+        var guildDataNew_1, msgEmbed, vchannel, song_1, footerString_1, songOne, songOne, dispatcher, _c, _d, error_1, msgString, msgEmbed, msg;
         var _this = this;
         return __generator(this, function (_e) {
             switch (_e.label) {
                 case 0:
-                    _e.trys.push([0, 8, , 11]);
+                    _e.trys.push([0, 7, , 10]);
                     guildDataNew_1 = guildData;
                     if (!(guildDataNew_1.playlist.songs.length === 0 && guildDataNew_1.playlist.currentSong.url === '')) return [3 /*break*/, 3];
                     msgEmbed = new Discord.MessageEmbed();
@@ -88,8 +88,7 @@ function playSongs(guildData, commandData, connection, discordUser) {
                     _e.sent();
                     return [2 /*return*/];
                 case 3:
-                    dispatcher = void 0;
-                    if (!(guildDataNew_1.playlist.playNext === true)) return [3 /*break*/, 6];
+                    if (!(guildDataNew_1.playlist.playNext === true)) return [3 /*break*/, 5];
                     footerString_1 = '';
                     if (guildDataNew_1.playlist.loopSong === true) {
                         songOne = void 0;
@@ -170,7 +169,7 @@ function playSongs(guildData, commandData, connection, discordUser) {
                         });
                     }); })
                         .on('error', function (error) { return __awaiter(_this, void 0, void 0, function () {
-                        var msgString, msgEmbed;
+                        var msgString, msgEmbed, msg;
                         return __generator(this, function (_a) {
                             switch (_a.label) {
                                 case 0:
@@ -184,24 +183,26 @@ function playSongs(guildData, commandData, connection, discordUser) {
                                         .setTitle('__**Playback Error:**__');
                                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                                 case 1:
+                                    msg = _a.sent();
+                                    if (commandData.toTextChannel instanceof Discord.WebhookClient) {
+                                        msg = new Discord.Message(commandData.guild.client, msg, commandData.fromTextChannel);
+                                    }
+                                    return [4 /*yield*/, msg.delete({ timeout: 20000 })];
+                                case 2:
                                     _a.sent();
                                     return [2 /*return*/];
                             }
                         });
                     }); });
                     dispatcher.setVolumeLogarithmic(guildDataNew_1.playlist.volume / 5);
-                    guildDataNew_1.playlist.playNext = false;
-                    return [4 /*yield*/, guildDataNew_1.writeToDataBase()];
+                    _e.label = 5;
                 case 5:
-                    _e.sent();
-                    _e.label = 6;
-                case 6:
                     guildDataNew_1.playlist.playNext = false;
                     return [4 /*yield*/, guildDataNew_1.writeToDataBase()];
-                case 7:
+                case 6:
                     _e.sent();
                     return [2 /*return*/];
-                case 8:
+                case 7:
                     error_1 = _e.sent();
                     console.log(error_1);
                     msgString = "------\n**Sorry, there was an error trying to play that!**\n------";
@@ -212,16 +213,16 @@ function playSongs(guildData, commandData, connection, discordUser) {
                         .setTimestamp(Date())
                         .setTitle('__**Playback Issue:**__');
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
-                case 9:
+                case 8:
                     msg = _e.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         msg = new Discord.Message(commandData.guild.client, msg, commandData.fromTextChannel);
                     }
                     return [4 /*yield*/, msg.delete({ timeout: 20000 })];
-                case 10:
+                case 9:
                     _e.sent();
-                    return [3 /*break*/, 11];
-                case 11: return [2 /*return*/];
+                    return [3 /*break*/, 10];
+                case 10: return [2 /*return*/];
             }
         });
     });
