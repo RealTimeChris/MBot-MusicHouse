@@ -240,7 +240,6 @@ var HelperFunctions;
                     case 1:
                         _a.sent();
                         isItFound = true;
-                        console.log(guildData.musicChannelIDs.length);
                         if (!(guildData.musicChannelIDs.length > 0)) return [3 /*break*/, 4];
                         isItFound = false;
                         msgString = "------\n**Sorry, but please do that in one of the following channels:**\n------\n";

@@ -59,14 +59,13 @@ var command = {
 function playSongs(guildData, commandData, connection, discordUser) {
     var _a, _b;
     return __awaiter(this, void 0, void 0, function () {
-        var guildDataNew_1, msgEmbed, vchannel, song_1, footerString_1, songOne, songOne, dispatcher, _c, _d, error_1, msgString, msgEmbed, msg;
+        var msgEmbed, vchannel, song_1, footerString_1, songOne, songOne, dispatcher, _c, _d, error_1, msgString, msgEmbed, msg;
         var _this = this;
         return __generator(this, function (_e) {
             switch (_e.label) {
                 case 0:
                     _e.trys.push([0, 7, , 10]);
-                    guildDataNew_1 = guildData;
-                    if (!(guildDataNew_1.playlist.songs.length === 0 && guildDataNew_1.playlist.currentSong.url === '')) return [3 /*break*/, 3];
+                    if (!(guildData.playlist.songs.length === 0 && guildData.playlist.currentSong.url === '')) return [3 /*break*/, 3];
                     msgEmbed = new Discord.MessageEmbed();
                     msgEmbed
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
@@ -74,13 +73,13 @@ function playSongs(guildData, commandData, connection, discordUser) {
                         .setTimestamp(Date.now())
                         .setTitle('__**Empty Playlist:**__')
                         .setDescription('------\n**Sorry, but there are no songs left in the playlist/queue!**\n------');
-                    vchannel = (_a = commandData.guild) === null || _a === void 0 ? void 0 : _a.client.channels.resolve(guildDataNew_1.playlist.voiceChannel.id);
+                    vchannel = (_a = commandData.guild) === null || _a === void 0 ? void 0 : _a.client.channels.resolve(guildData.playlist.voiceChannel.id);
                     vchannel.leave();
-                    guildDataNew_1.playlist.textChannel = null;
-                    guildDataNew_1.playlist.voiceChannel = null;
-                    guildDataNew_1.playlist.playNext = true;
-                    guildDataNew_1.playlist.currentSong = { name: '', addedBy: '', url: '', thumbnailURL: '', id: '' };
-                    return [4 /*yield*/, guildDataNew_1.writeToDataBase()];
+                    guildData.playlist.textChannel = null;
+                    guildData.playlist.voiceChannel = null;
+                    guildData.playlist.playNext = true;
+                    guildData.playlist.currentSong = { name: '', addedBy: '', url: '', thumbnailURL: '', id: '' };
+                    return [4 /*yield*/, guildData.writeToDataBase()];
                 case 1:
                     _e.sent();
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
@@ -88,37 +87,37 @@ function playSongs(guildData, commandData, connection, discordUser) {
                     _e.sent();
                     return [2 /*return*/];
                 case 3:
-                    if (!(guildDataNew_1.playlist.playNext === true)) return [3 /*break*/, 5];
+                    if (!(guildData.playlist.playNext === true)) return [3 /*break*/, 5];
                     footerString_1 = '';
-                    if (guildDataNew_1.playlist.loopSong === true) {
+                    if (guildData.playlist.loopSong === true) {
                         songOne = void 0;
-                        if (guildDataNew_1.playlist.currentSong.url === '') {
-                            songOne = guildDataNew_1.playlist.songs.shift();
+                        if (guildData.playlist.currentSong.url === '') {
+                            songOne = guildData.playlist.songs.shift();
                         }
                         else {
-                            songOne = guildDataNew_1.playlist.currentSong;
+                            songOne = guildData.playlist.currentSong;
                         }
                         song_1 = songOne;
                         footerString_1 = 'Looping of the current song is enabled!';
                     }
-                    else if (guildDataNew_1.playlist.loopAll === true) {
+                    else if (guildData.playlist.loopAll === true) {
                         songOne = void 0;
-                        if (guildDataNew_1.playlist.songs.length === 0 && guildDataNew_1.playlist.currentSong.url !== '') {
-                            songOne = guildDataNew_1.playlist.currentSong;
+                        if (guildData.playlist.songs.length === 0 && guildData.playlist.currentSong.url !== '') {
+                            songOne = guildData.playlist.currentSong;
                         }
-                        else if (guildDataNew_1.playlist.currentSong.url === '') {
-                            songOne = guildDataNew_1.playlist.songs.shift();
+                        else if (guildData.playlist.currentSong.url === '') {
+                            songOne = guildData.playlist.songs.shift();
                         }
-                        else if (guildDataNew_1.playlist.songs.length > 0) {
-                            songOne = guildDataNew_1.playlist.songs.shift();
+                        else if (guildData.playlist.songs.length > 0) {
+                            songOne = guildData.playlist.songs.shift();
                         }
                         song_1 = songOne;
                         footerString_1 = 'Looping of the current playlist is enabled!';
                     }
                     else {
-                        song_1 = guildDataNew_1.playlist.songs.shift();
+                        song_1 = guildData.playlist.songs.shift();
                     }
-                    guildDataNew_1.playlist.currentSong = song_1;
+                    guildData.playlist.currentSong = song_1;
                     _d = (_c = connection).play;
                     return [4 /*yield*/, ytdl(song_1.url)];
                 case 4:
@@ -135,13 +134,13 @@ function playSongs(guildData, commandData, connection, discordUser) {
                                         .setTimestamp(Date())
                                         .setTitle('__**Now Playing:**__')
                                         .setFooter(footerString_1)
-                                        .setDescription("__**Title:**__ [" + song_1.name + "](" + song_1.url + ")\n__**Added By:**__ <@!" + song_1.addedBy + ">\n__**Songs Remaining In Queue:**__ " + guildDataNew_1.playlist.songs.length)
+                                        .setDescription("__**Title:**__ [" + song_1.name + "](" + song_1.url + ")\n__**Added By:**__ <@!" + song_1.addedBy + ">\n__**Songs Remaining In Queue:**__ " + guildData.playlist.songs.length)
                                         .setImage(song_1.thumbnailURL);
                                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                                 case 1:
                                     _a.sent();
-                                    guildDataNew_1.playlist.playNext = false;
-                                    return [4 /*yield*/, guildDataNew_1.writeToDataBase()];
+                                    guildData.playlist.playNext = false;
+                                    return [4 /*yield*/, guildData.writeToDataBase()];
                                 case 2:
                                     _a.sent();
                                     return [2 /*return*/];
@@ -152,18 +151,18 @@ function playSongs(guildData, commandData, connection, discordUser) {
                         return __generator(this, function (_a) {
                             switch (_a.label) {
                                 case 0:
-                                    guildDataNew_1 = new GuildData_1.default({ dataBase: discordUser.dataBase, id: commandData.guild.id, name: commandData.guild.name, memberCount: commandData.guild.memberCount });
-                                    return [4 /*yield*/, guildDataNew_1.getFromDataBase()];
+                                    guildData = new GuildData_1.default({ dataBase: discordUser.dataBase, id: commandData.guild.id, name: commandData.guild.name, memberCount: commandData.guild.memberCount });
+                                    return [4 /*yield*/, guildData.getFromDataBase()];
                                 case 1:
                                     _a.sent();
-                                    guildDataNew_1.playlist.playNext = true;
-                                    if (guildDataNew_1.playlist.loopAll === true && guildDataNew_1.playlist.loopSong === false) {
-                                        guildDataNew_1.playlist.songs.push(guildDataNew_1.playlist.currentSong);
+                                    guildData.playlist.playNext = true;
+                                    if (guildData.playlist.loopAll === true && guildData.playlist.loopSong === false) {
+                                        guildData.playlist.songs.push(guildData.playlist.currentSong);
                                     }
-                                    return [4 /*yield*/, guildDataNew_1.writeToDataBase()];
+                                    return [4 /*yield*/, guildData.writeToDataBase()];
                                 case 2:
                                     _a.sent();
-                                    playSongs(guildDataNew_1, commandData, connection, discordUser);
+                                    playSongs(guildData, commandData, connection, discordUser);
                                     return [2 /*return*/];
                             }
                         });
@@ -194,11 +193,11 @@ function playSongs(guildData, commandData, connection, discordUser) {
                             }
                         });
                     }); });
-                    dispatcher.setVolumeLogarithmic(guildDataNew_1.playlist.volume / 5);
+                    dispatcher.setVolumeLogarithmic(guildData.playlist.volume / 5);
                     _e.label = 5;
                 case 5:
-                    guildDataNew_1.playlist.playNext = false;
-                    return [4 /*yield*/, guildDataNew_1.writeToDataBase()];
+                    guildData.playlist.playNext = false;
+                    return [4 /*yield*/, guildData.writeToDataBase()];
                 case 6:
                     _e.sent();
                     return [2 /*return*/];
@@ -429,7 +428,6 @@ function execute(commandData, discordUser) {
                     return [4 /*yield*/, newMessage.edit(messageEmbed)];
                 case 27:
                     _h.sent();
-                    guildData = new GuildData_1.default({ dataBase: discordUser.dataBase, id: commandData.guild.id, name: commandData.guild.name, memberCount: commandData.guild.memberCount });
                     return [4 /*yield*/, guildData.getFromDataBase()];
                 case 28:
                     _h.sent();
@@ -442,7 +440,6 @@ function execute(commandData, discordUser) {
                     return [4 /*yield*/, newMessage.edit(messageEmbed)];
                 case 30:
                     _h.sent();
-                    guildData = new GuildData_1.default({ dataBase: discordUser.dataBase, id: commandData.guild.id, name: commandData.guild.name, memberCount: commandData.guild.memberCount });
                     return [4 /*yield*/, guildData.getFromDataBase()];
                 case 31:
                     _h.sent();
@@ -455,7 +452,6 @@ function execute(commandData, discordUser) {
                     return [4 /*yield*/, newMessage.edit(messageEmbed)];
                 case 33:
                     _h.sent();
-                    guildData = new GuildData_1.default({ dataBase: discordUser.dataBase, id: commandData.guild.id, name: commandData.guild.name, memberCount: commandData.guild.memberCount });
                     return [4 /*yield*/, guildData.getFromDataBase()];
                 case 34:
                     _h.sent();
@@ -468,7 +464,6 @@ function execute(commandData, discordUser) {
                     return [4 /*yield*/, newMessage.edit(messageEmbed)];
                 case 36:
                     _h.sent();
-                    guildData = new GuildData_1.default({ dataBase: discordUser.dataBase, id: commandData.guild.id, name: commandData.guild.name, memberCount: commandData.guild.memberCount });
                     return [4 /*yield*/, guildData.getFromDataBase()];
                 case 37:
                     _h.sent();
@@ -486,7 +481,6 @@ function execute(commandData, discordUser) {
                     newSong = (_g.url = (_h.sent()).videoDetails.video_url,
                         _g.id = finalSearchResultItems[currentPageIndex].id,
                         _g);
-                    guildData = new GuildData_1.default({ dataBase: discordUser.dataBase, id: commandData.guild.id, name: commandData.guild.name, memberCount: commandData.guild.memberCount });
                     return [4 /*yield*/, guildData.getFromDataBase()];
                 case 40:
                     _h.sent();

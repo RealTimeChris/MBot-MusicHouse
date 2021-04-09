@@ -156,7 +156,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 			return commandReturnData;
 		}
 
-		let guildData = new GuildData({dataBase: discordUser.dataBase, id: commandData.guild!.id, name: commandData.guild!.name, memberCount: commandData.guild!.memberCount});
+		const guildData = new GuildData({dataBase: discordUser.dataBase, id: commandData.guild!.id, name: commandData.guild!.name, memberCount: commandData.guild!.memberCount});
 		await guildData.getFromDataBase();
 
 		const doWeHaveControl = await HelperFunctions.checkIfWeHaveControl(commandData, guildData);

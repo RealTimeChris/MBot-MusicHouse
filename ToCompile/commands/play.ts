@@ -24,8 +24,7 @@ const command: FoundationClasses.BotCommand = {
  */
 async function playSongs(guildData: GuildData, commandData: FoundationClasses.CommandData, connection: Discord.VoiceConnection, discordUser: DiscordUser): Promise<void> {
 	try {
-		let guildDataNew = guildData;
-		if (guildDataNew.playlist.songs.length === 0 && guildDataNew.playlist.currentSong.url === '') {
+		if (guildData.playlist.songs.length === 0 && guildData.playlist.currentSong.url === '') {
 			const msgEmbed = new Discord.MessageEmbed();
 			msgEmbed
                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
@@ -33,47 +32,47 @@ async function playSongs(guildData: GuildData, commandData: FoundationClasses.Co
                 .setTimestamp(Date.now())
                 .setTitle('__**Empty Playlist:**__')
 				.setDescription('------\n**Sorry, but there are no songs left in the playlist/queue!**\n------');
-			const vchannel = commandData.guild?.client.channels.resolve(guildDataNew.playlist.voiceChannel!.id) as Discord.VoiceChannel;
+			const vchannel = commandData.guild?.client.channels.resolve(guildData.playlist.voiceChannel!.id) as Discord.VoiceChannel;
 			vchannel.leave();
-			guildDataNew.playlist.textChannel = null;
-			guildDataNew.playlist.voiceChannel = null;
-			guildDataNew.playlist.playNext = true;
-            guildDataNew.playlist.currentSong = {name: '', addedBy: '', url: '', thumbnailURL: '', id: ''};
-			await guildDataNew.writeToDataBase();
+			guildData.playlist.textChannel = null;
+			guildData.playlist.voiceChannel = null;
+			guildData.playlist.playNext = true;
+            guildData.playlist.currentSong = {name: '', addedBy: '', url: '', thumbnailURL: '', id: ''};
+			await guildData.writeToDataBase();
 			await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
 			return;
 		}
 
-		if (guildDataNew.playlist.playNext === true) {
+		if (guildData.playlist.playNext === true) {
 			let song: FoundationClasses.YouTubeSong;
 			let footerString = '';
-			if (guildDataNew.playlist.loopSong === true) {
+			if (guildData.playlist.loopSong === true) {
                 let songOne;
-				if (guildDataNew.playlist.currentSong.url === ''){
-					songOne = guildDataNew.playlist.songs.shift()!;
+				if (guildData.playlist.currentSong.url === ''){
+					songOne = guildData.playlist.songs.shift()!;
 				}
 				else {
-					songOne = guildDataNew.playlist.currentSong;
+					songOne = guildData.playlist.currentSong;
 				}
 				song = songOne;
 				footerString = 'Looping of the current song is enabled!';
-			} else if (guildDataNew.playlist.loopAll === true) {
+			} else if (guildData.playlist.loopAll === true) {
                 let songOne;
-				if (guildDataNew.playlist.songs.length === 0 && guildDataNew.playlist.currentSong.url !== ''){
-					songOne = guildDataNew.playlist.currentSong;
+				if (guildData.playlist.songs.length === 0 && guildData.playlist.currentSong.url !== ''){
+					songOne = guildData.playlist.currentSong;
 				}
-				else if (guildDataNew.playlist.currentSong.url === ''){
-					songOne = guildDataNew.playlist.songs.shift();
+				else if (guildData.playlist.currentSong.url === ''){
+					songOne = guildData.playlist.songs.shift();
 				}
-				else if (guildDataNew.playlist.songs.length > 0){
-					songOne = guildDataNew.playlist.songs.shift();
+				else if (guildData.playlist.songs.length > 0){
+					songOne = guildData.playlist.songs.shift();
 				}
 				song = songOne as FoundationClasses.YouTubeSong;
 				footerString = 'Looping of the current playlist is enabled!';
 			} else {
-				song = guildDataNew.playlist.songs.shift()!;
+				song = guildData.playlist.songs.shift()!;
 			}
-            guildDataNew.playlist.currentSong = song;
+            guildData.playlist.currentSong = song;
 			const dispatcher = connection.play(await ytdl(song.url), { type: 'opus' });
 
 			dispatcher.on('start', async () => {
@@ -84,21 +83,21 @@ async function playSongs(guildData: GuildData, commandData: FoundationClasses.Co
                     .setTimestamp(Date() as unknown as Date)
                     .setTitle('__**Now Playing:**__')
 					.setFooter(footerString)
-					.setDescription(`__**Title:**__ [${song.name}](${song.url})\n__**Added By:**__ <@!${song.addedBy}>\n__**Songs Remaining In Queue:**__ ${guildDataNew.playlist.songs.length}`)
+					.setDescription(`__**Title:**__ [${song.name}](${song.url})\n__**Added By:**__ <@!${song.addedBy}>\n__**Songs Remaining In Queue:**__ ${guildData.playlist.songs.length}`)
 					.setImage(song.thumbnailURL);
 				await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-				guildDataNew.playlist.playNext = false;
-				await guildDataNew.writeToDataBase();
+				guildData.playlist.playNext = false;
+				await guildData.writeToDataBase();
 			})
 				.on('finish', async () => {
-					guildDataNew = new GuildData({dataBase: discordUser.dataBase, id: commandData.guild!.id, name: commandData.guild!.name, memberCount: commandData.guild!.memberCount});
-		            await guildDataNew.getFromDataBase();
-					guildDataNew.playlist.playNext = true;
-                    if (guildDataNew.playlist.loopAll === true && guildDataNew.playlist.loopSong === false){
-                        guildDataNew.playlist.songs.push(guildDataNew.playlist.currentSong);
+					guildData = new GuildData({dataBase: discordUser.dataBase, id: commandData.guild!.id, name: commandData.guild!.name, memberCount: commandData.guild!.memberCount});
+		            await guildData.getFromDataBase();
+					guildData.playlist.playNext = true;
+                    if (guildData.playlist.loopAll === true && guildData.playlist.loopSong === false){
+                        guildData.playlist.songs.push(guildData.playlist.currentSong);
                     }
-					await guildDataNew.writeToDataBase();
-					playSongs(guildDataNew, commandData, connection, discordUser);
+					await guildData.writeToDataBase();
+					playSongs(guildData, commandData, connection, discordUser);
 				})
 				.on('error', async (error) => {
 					console.log(error);
@@ -116,11 +115,11 @@ async function playSongs(guildData: GuildData, commandData: FoundationClasses.Co
                     await msg.delete({timeout: 20000});
 				});
 
-			dispatcher.setVolumeLogarithmic(guildDataNew.playlist.volume / 5);
+			dispatcher.setVolumeLogarithmic(guildData.playlist.volume / 5);
 		}
 
-		guildDataNew.playlist.playNext = false;
-		await guildDataNew.writeToDataBase();
+		guildData.playlist.playNext = false;
+		await guildData.writeToDataBase();
 
 		return;
 	} catch (error) {
@@ -158,7 +157,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             return commandReturnData;
         }
 
-        let guildData = new GuildData({dataBase: discordUser.dataBase, id: commandData.guild!.id, name: commandData.guild!.name, memberCount: commandData.guild!.memberCount});
+        const guildData = new GuildData({dataBase: discordUser.dataBase, id: commandData.guild!.id, name: commandData.guild!.name, memberCount: commandData.guild!.memberCount});
 		await guildData.getFromDataBase();
 
         if (!(commandData.fromTextChannel as Discord.TextChannel).permissionsFor(commandData.guild?.client.user as Discord.User)?.has('MANAGE_MESSAGES')){
@@ -309,7 +308,6 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                     currentPageIndex = 0;
                     const messageEmbed = msgEmbeds[currentPageIndex];
                     await newMessage.edit(messageEmbed!);
-                    guildData = new GuildData({dataBase: discordUser.dataBase, id: commandData.guild!.id, name: commandData.guild!.name, memberCount: commandData.guild!.memberCount});
 		            await guildData.getFromDataBase();
                     continue;
                 } else if (reactionCollection.first()!.emoji.name === '▶️' && (currentPageIndex < msgEmbeds.length)) {
@@ -317,7 +315,6 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                     currentPageIndex += 1;
                     const messageEmbed = msgEmbeds[currentPageIndex];
                     await newMessage.edit(messageEmbed!);
-                    guildData = new GuildData({dataBase: discordUser.dataBase, id: commandData.guild!.id, name: commandData.guild!.name, memberCount: commandData.guild!.memberCount});
 		            await guildData.getFromDataBase();
                     continue;
                 } else if (reactionCollection.first()!.emoji.name === '◀️' && (currentPageIndex > 0)) {
@@ -325,7 +322,6 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                     currentPageIndex -= 1;
                     const messageEmbed = msgEmbeds[currentPageIndex];
                     await newMessage.edit(messageEmbed!);
-                    guildData = new GuildData({dataBase: discordUser.dataBase, id: commandData.guild!.id, name: commandData.guild!.name, memberCount: commandData.guild!.memberCount});
 		            await guildData.getFromDataBase();
                     continue;
                 } else if (reactionCollection.first()!.emoji.name === '◀️' && (currentPageIndex === 0)) {
@@ -333,7 +329,6 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                     currentPageIndex = msgEmbeds.length - 1;
                     const messageEmbed = msgEmbeds[currentPageIndex];
                     await newMessage.edit(messageEmbed!);
-                    guildData = new GuildData({dataBase: discordUser.dataBase, id: commandData.guild!.id, name: commandData.guild!.name, memberCount: commandData.guild!.memberCount});
 		            await guildData.getFromDataBase();
                     continue;
                 } else if (reactionCollection.first()!.emoji.name === '✅') {
@@ -346,7 +341,6 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                         id: finalSearchResultItems[currentPageIndex]!.id
                     };
 
-                    guildData = new GuildData({dataBase: discordUser.dataBase, id: commandData.guild!.id, name: commandData.guild!.name, memberCount: commandData.guild!.memberCount});
 		            await guildData.getFromDataBase();
 
                     guildData.playlist.songs.push(newSong);
