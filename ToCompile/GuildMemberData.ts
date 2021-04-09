@@ -34,7 +34,7 @@ export default class GuildMemberData extends FoundationClasses.DiscordEntity {
     
     async getFromDataBase(){
         try{
-            const guildMemberData = await this.dataBase?.get(this.dataBaseKey) as GuildMemberData;
+            const guildMemberData = await this.dataBase.get(this.dataBaseKey) as GuildMemberData;
         }
         catch(error){
             if (error.type === 'NotFoundError') {
@@ -50,7 +50,7 @@ export default class GuildMemberData extends FoundationClasses.DiscordEntity {
             error.message = "You've forgotten to initialize the GuildMemberData structure!";
             throw error;
         }
-        await this.dataBase?.put(this.dataBaseKey, this);
+        await this.dataBase.put(this.dataBaseKey, this);
         GuildMemberData.guildMembersData.set(this.dataBaseKey, this);
     }
     constructor(initData: GuildMemberDataInitData) {

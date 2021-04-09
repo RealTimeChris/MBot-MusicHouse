@@ -95,7 +95,6 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 
 		const vchannel = commandData.guild?.client.channels.resolve(guildData.playlist.voiceChannel!.id) as Discord.VoiceChannel;
 		vchannel.leave();
-		console.log(guildData.playlist.currentSong.id);
 		if ((guildData.playlist.loopAll === true || guildData.playlist.loopSong === true) && guildData.playlist.currentSong.id !== ''){
 			guildData.playlist.songs.unshift(guildData.playlist.currentSong);
 		}

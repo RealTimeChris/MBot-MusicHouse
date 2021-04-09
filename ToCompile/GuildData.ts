@@ -37,7 +37,7 @@ export default class GuildData extends FoundationClasses.DiscordEntity {
 
     async getFromDataBase(){
         try{
-            const guildData = await this.dataBase?.get(this.dataBaseKey) as GuildData;
+            const guildData = await this.dataBase.get(this.dataBaseKey) as GuildData;
             this.borderColor = guildData.borderColor;
             this.djRoleID = guildData.djRoleID;
             this.musicChannelIDs = guildData.musicChannelIDs;
@@ -58,7 +58,7 @@ export default class GuildData extends FoundationClasses.DiscordEntity {
             throw error;
         }
         console.log('Updating database values for guild: ' + this.guildName);
-        await this.dataBase?.put(this.dataBaseKey, this);
+        await this.dataBase.put(this.dataBaseKey, this);
         GuildData.guildsData.set(this.dataBaseKey, this);
     }
     constructor(initData: GuildDataInitData) {
