@@ -20,7 +20,7 @@ module IndexFunctions{
             console.log(error);
         }
     }
-    
+
     export async function onMessage(msg: Discord.Message, client: any, discordUser: DiscordUser){
         if (client.users.resolve(msg.author.id) === null) {
             console.log('Non-found user! Better escape!');
