@@ -44,7 +44,6 @@ async function playSongs(guildData: GuildData, commandData: FoundationClasses.Co
 			return;
 		}
 
-		let dispatcher;
 		if (guildDataNew.playlist.playNext === true) {
 			let song: FoundationClasses.YouTubeSong;
 			let footerString = '';
@@ -75,7 +74,7 @@ async function playSongs(guildData: GuildData, commandData: FoundationClasses.Co
 				song = guildDataNew.playlist.songs.shift()!;
 			}
             guildDataNew.playlist.currentSong = song;
-			dispatcher = connection.play(await ytdl(song.url), { type: 'opus' });
+			const dispatcher = connection.play(await ytdl(song.url), { type: 'opus' });
 
 			dispatcher.on('start', async () => {
 				const msgEmbed = new Discord.MessageEmbed();
@@ -110,12 +109,14 @@ async function playSongs(guildData: GuildData, commandData: FoundationClasses.Co
 				        .setDescription(msgString)
 				        .setTimestamp(Date() as unknown as Date)
 				        .setTitle('__**Playback Error:**__')
-			        await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
+                    let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
+                    if (commandData.toTextChannel instanceof Discord.WebhookClient){
+                        msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
+                    }
+                    await msg.delete({timeout: 20000});
 				});
 
 			dispatcher.setVolumeLogarithmic(guildDataNew.playlist.volume / 5);
-			guildDataNew.playlist.playNext = false;
-			await guildDataNew.writeToDataBase();
 		}
 
 		guildDataNew.playlist.playNext = false;
