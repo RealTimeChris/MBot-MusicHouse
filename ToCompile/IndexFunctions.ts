@@ -260,7 +260,7 @@ module IndexFunctions{
         try {
             const guildData = new GuildData({dataBase: discordUser.dataBase, id: newVoiceState.guild!.id, name: newVoiceState.guild!.name, memberCount: newVoiceState.guild!.memberCount});
             await guildData.getFromDataBase();
-            if ((newVoiceState.member as Discord.GuildMember).id === discordUser.userData.userID && newVoiceState.channelID === null && guildData.playlist.textChannel !== null) {
+            if (newVoiceState.member!.id === discordUser.userData.userID && newVoiceState.channelID === null && guildData.playlist.textChannel !== null) {
                 const currentTextChannel = await client.channels.fetch(guildData.playlist.textChannel!.id) as Discord.TextChannel;
                 const guildAuditLogs = await newVoiceState.guild.fetchAuditLogs({limit: 1, type: 'MEMBER_DISCONNECT'});
                 let auditLogsEntry: Discord.GuildAuditLogsEntry;
