@@ -14,19 +14,19 @@ const discordUser = new DiscordUser();
 const client = new Discord.Client() as any;
 
 client.once('ready', async () => {
-	IndexFunctions.onReady(client, discordUser);
+	await IndexFunctions.onReady(client, discordUser);
 });
 
 client.on('message', async (msg: Discord.Message) => {
-	IndexFunctions.onMessage(msg, client, discordUser);
+	await IndexFunctions.onMessage(msg, client, discordUser);
 });
 
 client.ws.on('INTERACTION_CREATE', async (interaction: any) => {
-	IndexFunctions.onInteractionCreate(interaction, client, discordUser);
+	await IndexFunctions.onInteractionCreate(interaction, client, discordUser);
 });
 
 client.on('voiceStateUpdate', async (oldVoiceState: Discord.VoiceState, newVoiceState: Discord.VoiceState) => {
-	IndexFunctions.onVoiceStatusUpdate(newVoiceState, client, discordUser);
+	await IndexFunctions.onVoiceStatusUpdate(newVoiceState, client, discordUser);
 });
 
 client.login(config.botToken);
