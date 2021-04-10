@@ -51,12 +51,20 @@ var IndexFunctions;
 (function (IndexFunctions) {
     function onHeartBeat(client, discordUser) {
         return __awaiter(this, void 0, void 0, function () {
+            var error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, discordUser.updateDataCacheAndSaveToFile(client)];
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, discordUser.updateDataCacheAndSaveToFile(client)];
                     case 1:
                         _a.sent();
-                        return [2 /*return*/];
+                        return [3 /*break*/, 3];
+                    case 2:
+                        error_1 = _a.sent();
+                        console.log(error_1);
+                        return [3 /*break*/, 3];
+                    case 3: return [2 /*return*/];
                 }
             });
         });
@@ -64,7 +72,7 @@ var IndexFunctions;
     IndexFunctions.onHeartBeat = onHeartBeat;
     function onReady(client, discordUser, eventEmitter) {
         return __awaiter(this, void 0, void 0, function () {
-            var error_1;
+            var error_2;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -78,8 +86,8 @@ var IndexFunctions;
                         eventEmitter.emit('HeartBeat');
                         return [3 /*break*/, 4];
                     case 3:
-                        error_1 = _a.sent();
-                        console.log(error_1);
+                        error_2 = _a.sent();
+                        console.log(error_2);
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -90,7 +98,7 @@ var IndexFunctions;
     function onMessage(msg, client, discordUser) {
         var _a, _b, _c, _d, _e, _f;
         return __awaiter(this, void 0, void 0, function () {
-            var command, args, x, commandData, cmdReturnData, error_2, error_3, command, cmdName, error_4, error_5;
+            var command, args, x, commandData, cmdReturnData, error_3, error_4, command, cmdName, error_5, error_6;
             return __generator(this, function (_g) {
                 switch (_g.label) {
                     case 0:
@@ -147,14 +155,14 @@ var IndexFunctions;
                         console.log("Completed Command: " + cmdReturnData.commandName);
                         return [3 /*break*/, 10];
                     case 9:
-                        error_2 = _g.sent();
-                        console.log(error_2);
+                        error_3 = _g.sent();
+                        console.log(error_3);
                         msg.reply('There was an error trying to execute that command!');
                         return [3 /*break*/, 10];
                     case 10: return [2 /*return*/];
                     case 11:
-                        error_3 = _g.sent();
-                        console.log(error_3);
+                        error_4 = _g.sent();
+                        console.log(error_4);
                         return [3 /*break*/, 12];
                     case 12: return [3 /*break*/, 20];
                     case 13:
@@ -176,14 +184,14 @@ var IndexFunctions;
                         console.log("Completed Command: " + cmdName);
                         return [3 /*break*/, 18];
                     case 17:
-                        error_4 = _g.sent();
-                        console.log(error_4);
+                        error_5 = _g.sent();
+                        console.log(error_5);
                         msg.reply('There was an error trying to process that message!');
                         return [3 /*break*/, 18];
                     case 18: return [2 /*return*/];
                     case 19:
-                        error_5 = _g.sent();
-                        console.log(error_5);
+                        error_6 = _g.sent();
+                        console.log(error_6);
                         return [3 /*break*/, 20];
                     case 20: return [2 /*return*/];
                 }
@@ -194,7 +202,7 @@ var IndexFunctions;
     function onInteractionCreate(interaction, client, discordUser) {
         var _a;
         return __awaiter(this, void 0, void 0, function () {
-            var channel_id, channel, id_full, guild_id_full, options_full, name_full, commandData, id, guild_id, _b, options, name_1, id, guild_id, _c, options, name_2, name_3, nameSolid, value1, name_4, roleID, roleName, roleColor, value, areWeLooping, areWeLooping, songName, songName, redChannelValue, greenChannelValue, blueChannelValue, returnData, error_6;
+            var channel_id, channel, id_full, guild_id_full, options_full, name_full, commandData, id, guild_id, _b, options, name_1, id, guild_id, _c, options, name_2, name_3, nameSolid, value1, name_4, roleID, roleName, roleColor, value, areWeLooping, areWeLooping, songName, songName, redChannelValue, greenChannelValue, blueChannelValue, returnData, error_7;
             return __generator(this, function (_d) {
                 switch (_d.label) {
                     case 0:
@@ -352,8 +360,8 @@ var IndexFunctions;
                         console.log("Completed Command: " + returnData.commandName);
                         return [3 /*break*/, 10];
                     case 9:
-                        error_6 = _d.sent();
-                        console.log(error_6);
+                        error_7 = _d.sent();
+                        console.log(error_7);
                         return [3 /*break*/, 10];
                     case 10: return [2 /*return*/];
                 }
@@ -364,7 +372,7 @@ var IndexFunctions;
     function onVoiceStatusUpdate(newVoiceState, client, discordUser) {
         var _a;
         return __awaiter(this, void 0, void 0, function () {
-            var guildData_1, currentTextChannel_1, guildAuditLogs_1, auditLogsEntry_1, currentVoiceChannel, currentTextChannel, msgEmbed, newMsg, guildMember, error_7;
+            var guildData_1, currentTextChannel_1, guildAuditLogs_1, auditLogsEntry_1, currentVoiceChannel, currentTextChannel, msgEmbed, newMsg, guildMember, error_8;
             var _this = this;
             return __generator(this, function (_b) {
                 switch (_b.label) {
@@ -459,8 +467,8 @@ var IndexFunctions;
                         }
                         return [3 /*break*/, 12];
                     case 11:
-                        error_7 = _b.sent();
-                        console.log(error_7);
+                        error_8 = _b.sent();
+                        console.log(error_8);
                         return [3 /*break*/, 12];
                     case 12: return [2 /*return*/];
                 }

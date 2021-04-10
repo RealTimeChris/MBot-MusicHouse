@@ -53,7 +53,7 @@ var config = require("./config.json");
 var DiscordUser = /** @class */ (function () {
     function DiscordUser() {
         this.userData = { botCommanders: [], botToken: '', currencyName: '', dataBaseFilePath: '', guildCount: 0,
-            msBetweenCacheBackup: 0, prefix: '', publicKey: '', startupCall: true, timeOfLastUpdateAndSave: 0, userID: '', userName: '' };
+            prefix: '', publicKey: '', startupCall: true, timeOfLastUpdateAndSave: 0, userID: '', userName: '' };
     }
     /**
      * Initializes the instance of Discord, within the DiscordUser class.
@@ -113,7 +113,6 @@ var DiscordUser = /** @class */ (function () {
                                 currencyName: config.currencyName,
                                 dataBaseFilePath: this.userData.dataBaseFilePath,
                                 guildCount: client.guilds.cache.array().length,
-                                msBetweenCacheBackup: config.msBetweenCacheBackup,
                                 prefix: config.prefix,
                                 publicKey: config.publicKey,
                                 startupCall: true,
@@ -180,7 +179,6 @@ var DiscordUser = /** @class */ (function () {
                             currencyName: config.currencyName,
                             dataBaseFilePath: this.userData.dataBaseFilePath,
                             guildCount: client.guilds.cache.size,
-                            msBetweenCacheBackup: config.msBetweenCacheBackup,
                             prefix: config.prefix,
                             publicKey: config.publicKey,
                             startupCall: this.userData.startupCall,

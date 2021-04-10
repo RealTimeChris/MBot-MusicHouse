@@ -8,7 +8,6 @@ interface DiscordUserData {
     currencyName: string;
     dataBaseFilePath: string;
     guildCount: number;
-    msBetweenCacheBackup: number;
     prefix: string;
     publicKey: string;
     startupCall: boolean;

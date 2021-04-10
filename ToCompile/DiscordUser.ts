@@ -20,7 +20,6 @@ interface DiscordUserData {
     currencyName: string;
     dataBaseFilePath: string;
     guildCount: number;
-    msBetweenCacheBackup: number;
     prefix: string;
     publicKey: string;
     startupCall: boolean;
@@ -34,7 +33,7 @@ interface DiscordUserData {
  */
 export default class DiscordUser {
     public userData: DiscordUserData = {botCommanders: [], botToken: '', currencyName: '', dataBaseFilePath: '', guildCount: 0,
-        msBetweenCacheBackup: 0,  prefix: '', publicKey: '', startupCall: true, timeOfLastUpdateAndSave: 0, userID: '', userName: ''};
+        prefix: '', publicKey: '', startupCall: true, timeOfLastUpdateAndSave: 0, userID: '', userName: ''};
     public dataBase: any;
 
     /**
@@ -74,7 +73,6 @@ export default class DiscordUser {
                     currencyName: config.currencyName,
                     dataBaseFilePath: this.userData.dataBaseFilePath,
                     guildCount: client.guilds.cache.array().length,
-                    msBetweenCacheBackup: config.msBetweenCacheBackup,
                     prefix: config.prefix,
                     publicKey: config.publicKey,
                     startupCall: true,
@@ -121,7 +119,6 @@ export default class DiscordUser {
                 currencyName: config.currencyName,
                 dataBaseFilePath: this.userData.dataBaseFilePath,
                 guildCount: client.guilds.cache.size,
-                msBetweenCacheBackup: config.msBetweenCacheBackup,
                 prefix: config.prefix,
                 publicKey: config.publicKey,
                 startupCall: this.userData.startupCall,
