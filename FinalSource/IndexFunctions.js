@@ -74,17 +74,17 @@ var IndexFunctions;
     }
     IndexFunctions.onReady = onReady;
     function onMessage(msg, client, discordUser) {
-        var _a, _b, _c, _d;
+        var _a, _b, _c, _d, _e, _f;
         return __awaiter(this, void 0, void 0, function () {
             var command, args, x, commandData, cmdReturnData, error_2, error_3, command, cmdName, error_4, error_5;
-            return __generator(this, function (_e) {
-                switch (_e.label) {
+            return __generator(this, function (_g) {
+                switch (_g.label) {
                     case 0:
                         if (client.users.resolve(msg.author.id) === null) {
                             console.log('Non-found user! Better escape!');
                             return [2 /*return*/];
                         }
-                        if (msg.author.id === client.user.id) {
+                        if (msg.author.id === ((_a = client.user) === null || _a === void 0 ? void 0 : _a.id)) {
                             console.log('Better not track our own messages!');
                             return [2 /*return*/];
                         }
@@ -104,77 +104,77 @@ var IndexFunctions;
                         if (!CommandIndex_1.default.has(command)) {
                             return [2 /*return*/];
                         }
-                        _e.label = 1;
+                        _g.label = 1;
                     case 1:
-                        _e.trys.push([1, 12, , 13]);
+                        _g.trys.push([1, 12, , 13]);
                         commandData = new FoundationClasses_1.default.CommandData();
                         if (!(msg.channel.type !== 'dm' && msg.member !== null)) return [3 /*break*/, 3];
-                        return [4 /*yield*/, commandData.initialize(client, msg.channel.id, msg.channel.type, null, (_a = msg.member) === null || _a === void 0 ? void 0 : _a.id, (_b = msg.guild) === null || _b === void 0 ? void 0 : _b.id)];
+                        return [4 /*yield*/, commandData.initialize(client, msg.channel.id, msg.channel.type, null, (_b = msg.member) === null || _b === void 0 ? void 0 : _b.id, (_c = msg.guild) === null || _c === void 0 ? void 0 : _c.id)];
                     case 2:
-                        _e.sent();
+                        _g.sent();
                         return [3 /*break*/, 5];
                     case 3: return [4 /*yield*/, commandData.initialize(client, msg.channel.id, msg.channel.type, null, msg.author.id)];
                     case 4:
-                        _e.sent();
-                        _e.label = 5;
+                        _g.sent();
+                        _g.label = 5;
                     case 5:
                         commandData.args = args;
                         if (!msg.deletable) return [3 /*break*/, 7];
                         return [4 /*yield*/, msg.delete()];
                     case 6:
-                        _e.sent();
-                        _e.label = 7;
+                        _g.sent();
+                        _g.label = 7;
                     case 7:
-                        _e.trys.push([7, 9, , 10]);
+                        _g.trys.push([7, 9, , 10]);
                         console.log("Command: '" + command + "' entered by user: " + msg.author.username);
-                        return [4 /*yield*/, ((_c = CommandIndex_1.default.get(command)) === null || _c === void 0 ? void 0 : _c.function(commandData, discordUser))];
+                        return [4 /*yield*/, ((_d = CommandIndex_1.default.get(command)) === null || _d === void 0 ? void 0 : _d.function(commandData, discordUser))];
                     case 8:
-                        cmdReturnData = _e.sent();
+                        cmdReturnData = _g.sent();
                         console.log("Completed Command: " + cmdReturnData.commandName);
                         return [3 /*break*/, 10];
                     case 9:
-                        error_2 = _e.sent();
+                        error_2 = _g.sent();
                         console.log(error_2);
                         msg.reply('There was an error trying to execute that command!');
                         return [3 /*break*/, 10];
                     case 10: return [4 /*yield*/, discordUser.saveCacheIfTimeHasPassed(client)];
                     case 11:
-                        _e.sent();
+                        _g.sent();
                         return [2 /*return*/];
                     case 12:
-                        error_3 = _e.sent();
+                        error_3 = _g.sent();
                         console.log(error_3);
                         return [3 /*break*/, 13];
                     case 13: return [3 /*break*/, 22];
                     case 14:
-                        if (!(msg.author.id !== client.user.id)) return [3 /*break*/, 22];
-                        _e.label = 15;
+                        if (!(msg.author.id !== ((_e = client.user) === null || _e === void 0 ? void 0 : _e.id))) return [3 /*break*/, 22];
+                        _g.label = 15;
                     case 15:
-                        _e.trys.push([15, 21, , 22]);
+                        _g.trys.push([15, 21, , 22]);
                         command = 'message';
                         if (!CommandIndex_1.default.has(command)) {
                             return [2 /*return*/];
                         }
-                        _e.label = 16;
+                        _g.label = 16;
                     case 16:
-                        _e.trys.push([16, 18, , 19]);
+                        _g.trys.push([16, 18, , 19]);
                         console.log("Standard message entered: " + msg.author.username);
-                        return [4 /*yield*/, ((_d = CommandIndex_1.default.get(command)) === null || _d === void 0 ? void 0 : _d.function(msg))];
+                        return [4 /*yield*/, ((_f = CommandIndex_1.default.get(command)) === null || _f === void 0 ? void 0 : _f.function(msg))];
                     case 17:
-                        cmdName = _e.sent();
+                        cmdName = _g.sent();
                         console.log("Completed Command: " + cmdName);
                         return [3 /*break*/, 19];
                     case 18:
-                        error_4 = _e.sent();
+                        error_4 = _g.sent();
                         console.log(error_4);
                         msg.reply('There was an error trying to process that message!');
                         return [3 /*break*/, 19];
                     case 19: return [4 /*yield*/, discordUser.saveCacheIfTimeHasPassed(client)];
                     case 20:
-                        _e.sent();
+                        _g.sent();
                         return [2 /*return*/];
                     case 21:
-                        error_5 = _e.sent();
+                        error_5 = _g.sent();
                         console.log(error_5);
                         return [3 /*break*/, 22];
                     case 22: return [2 /*return*/];
@@ -354,28 +354,30 @@ var IndexFunctions;
     }
     IndexFunctions.onInteractionCreate = onInteractionCreate;
     function onVoiceStatusUpdate(newVoiceState, client, discordUser) {
+        var _a;
         return __awaiter(this, void 0, void 0, function () {
             var guildData_1, currentTextChannel_1, guildAuditLogs_1, auditLogsEntry_1, currentVoiceChannel, currentTextChannel, msgEmbed, newMsg, guildMember, error_7;
             var _this = this;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
+            return __generator(this, function (_b) {
+                switch (_b.label) {
                     case 0:
-                        _a.trys.push([0, 11, , 12]);
+                        _b.trys.push([0, 11, , 12]);
                         guildData_1 = new GuildData_1.default({ dataBase: discordUser.dataBase, id: newVoiceState.guild.id, name: newVoiceState.guild.name, memberCount: newVoiceState.guild.memberCount });
                         return [4 /*yield*/, guildData_1.getFromDataBase()];
                     case 1:
-                        _a.sent();
+                        _b.sent();
                         if (!(newVoiceState.member.id === discordUser.userData.userID && newVoiceState.channelID === null && guildData_1.playlist.textChannel !== null)) return [3 /*break*/, 4];
                         return [4 /*yield*/, client.channels.fetch(guildData_1.playlist.textChannel.id)];
                     case 2:
-                        currentTextChannel_1 = _a.sent();
+                        currentTextChannel_1 = _b.sent();
                         return [4 /*yield*/, newVoiceState.guild.fetchAuditLogs({ limit: 1, type: 'MEMBER_DISCONNECT' })];
                     case 3:
-                        guildAuditLogs_1 = _a.sent();
+                        guildAuditLogs_1 = _b.sent();
                         setTimeout(function () { return __awaiter(_this, void 0, void 0, function () {
                             var msgEmbed;
-                            return __generator(this, function (_a) {
-                                switch (_a.label) {
+                            var _a, _b;
+                            return __generator(this, function (_c) {
+                                switch (_c.label) {
                                     case 0:
                                         auditLogsEntry_1 = guildAuditLogs_1.entries.find(function (auditLogEntry) {
                                             return auditLogEntry.action === 'MEMBER_DISCONNECT' && Date.now() - auditLogEntry.createdTimestamp < 5000;
@@ -387,11 +389,11 @@ var IndexFunctions;
                                             .setDescription("------\n__**I've been kicked from the voice channel! Saving playlist and stopping!**__\n__**Kicked By:**__ <@!" + (auditLogsEntry_1 === null || auditLogsEntry_1 === void 0 ? void 0 : auditLogsEntry_1.executor.id) + "> (" + (auditLogsEntry_1 === null || auditLogsEntry_1 === void 0 ? void 0 : auditLogsEntry_1.executor.tag) + ")\n-----")
                                             .setTimestamp(Date.now())
                                             .setTitle('__**Kicked From Channel:**__')
-                                            .setAuthor(client.user.username, client.user.avatarURL());
+                                            .setAuthor((_a = client.user) === null || _a === void 0 ? void 0 : _a.username, (_b = client.user) === null || _b === void 0 ? void 0 : _b.avatarURL());
                                         return [4 /*yield*/, currentTextChannel_1.send(msgEmbed)];
                                     case 1:
-                                        _a.sent();
-                                        _a.label = 2;
+                                        _c.sent();
+                                        _c.label = 2;
                                     case 2:
                                         if (guildData_1.playlist.loopAll === true || guildData_1.playlist.loopSong === true) {
                                             guildData_1.playlist.songs.unshift(guildData_1.playlist.currentSong);
@@ -402,21 +404,21 @@ var IndexFunctions;
                                         guildData_1.playlist.currentSong = { name: '', id: '', url: '', thumbnailURL: '', addedBy: '' };
                                         return [4 /*yield*/, guildData_1.writeToDataBase()];
                                     case 3:
-                                        _a.sent();
+                                        _c.sent();
                                         return [2 /*return*/];
                                 }
                             });
                         }); }, 2000);
-                        _a.label = 4;
+                        _b.label = 4;
                     case 4:
                         if (!(guildData_1.playlist.voiceChannel != null)) return [3 /*break*/, 10];
                         return [4 /*yield*/, client.channels.fetch(guildData_1.playlist.voiceChannel.id)];
                     case 5:
-                        currentVoiceChannel = _a.sent();
-                        if (!(currentVoiceChannel.members.size === 1 && currentVoiceChannel.members.first().id === client.user.id)) return [3 /*break*/, 10];
+                        currentVoiceChannel = _b.sent();
+                        if (!(currentVoiceChannel.members.size === 1 && currentVoiceChannel.members.first().id === ((_a = client.user) === null || _a === void 0 ? void 0 : _a.id))) return [3 /*break*/, 10];
                         return [4 /*yield*/, client.channels.fetch(guildData_1.playlist.textChannel.id)];
                     case 6:
-                        currentTextChannel = _a.sent();
+                        currentTextChannel = _b.sent();
                         msgEmbed = new Discord.MessageEmbed();
                         msgEmbed
                             .setColor(guildData_1.borderColor)
@@ -426,7 +428,7 @@ var IndexFunctions;
                             .setAuthor(client.user.username, client.user.avatarURL());
                         return [4 /*yield*/, currentTextChannel.send(msgEmbed)];
                     case 7:
-                        newMsg = _a.sent();
+                        newMsg = _b.sent();
                         currentVoiceChannel.leave();
                         if ((guildData_1.playlist.loopAll === true || guildData_1.playlist.loopSong === true) && guildData_1.playlist.currentSong.id !== '') {
                             guildData_1.playlist.songs.unshift(guildData_1.playlist.currentSong);
@@ -437,11 +439,11 @@ var IndexFunctions;
                         guildData_1.playlist.currentSong = { name: '', id: '', url: '', thumbnailURL: '', addedBy: '' };
                         return [4 /*yield*/, guildData_1.writeToDataBase()];
                     case 8:
-                        _a.sent();
+                        _b.sent();
                         return [4 /*yield*/, newMsg.delete({ timeout: 20000 })];
                     case 9:
-                        _a.sent();
-                        _a.label = 10;
+                        _b.sent();
+                        _b.label = 10;
                     case 10:
                         if (newVoiceState.selfDeaf === false) {
                             guildMember = newVoiceState.member;
@@ -449,7 +451,7 @@ var IndexFunctions;
                         }
                         return [3 /*break*/, 12];
                     case 11:
-                        error_7 = _a.sent();
+                        error_7 = _b.sent();
                         console.log(error_7);
                         return [3 /*break*/, 12];
                     case 12: return [2 /*return*/];

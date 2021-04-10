@@ -106,7 +106,7 @@ async function playSongs(guildData: GuildData, commandData: FoundationClasses.Co
 				        .setColor(guildData.borderColor as [number, number, number])
 				        .setDescription(msgString)
 				        .setTimestamp(Date() as unknown as Date)
-				        .setTitle('__**Playback Error:**__')
+				        .setTitle('__**Playback Error:**__');
 			        let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
 					if (commandData.toTextChannel instanceof Discord.WebhookClient) {
 						msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);

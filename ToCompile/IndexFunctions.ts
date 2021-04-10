@@ -12,7 +12,7 @@ import GuildData from './GuildData';
 import botCommands from './CommandIndex';
 
 module IndexFunctions{
-    export async function onReady(client: any, discordUser: DiscordUser) {
+    export async function onReady(client: Discord.Client, discordUser: DiscordUser) {
         try {
             await discordUser.initializeInstance(client);
             await (client.user as Discord.ClientUser).setPresence({ status: 'online', activity: { name: '!help for commands!', type: 'STREAMING' } });
@@ -21,12 +21,12 @@ module IndexFunctions{
         }
     }
 
-    export async function onMessage(msg: Discord.Message, client: any, discordUser: DiscordUser) {
+    export async function onMessage(msg: Discord.Message, client: Discord.Client, discordUser: DiscordUser) {
         if (client.users.resolve(msg.author.id) === null) {
             console.log('Non-found user! Better escape!');
             return;
         }
-        if (msg.author.id === client.user.id) {
+        if (msg.author.id === client.user?.id) {
             console.log('Better not track our own messages!');
             return;
         }
@@ -75,7 +75,7 @@ module IndexFunctions{
                 console.log(error);
             }
             
-        } else if (msg.author.id !== client.user.id) {
+        } else if (msg.author.id !== client.user?.id) {
             try{
                 const command = 'message';
     
@@ -256,7 +256,7 @@ module IndexFunctions{
         }
     }
 
-    export async function onVoiceStatusUpdate(newVoiceState: Discord.VoiceState, client: any, discordUser: DiscordUser) {
+    export async function onVoiceStatusUpdate(newVoiceState: Discord.VoiceState, client: Discord.Client, discordUser: DiscordUser) {
         try {
             const guildData = new GuildData({dataBase: discordUser.dataBase, id: newVoiceState.guild!.id, name: newVoiceState.guild!.name, memberCount: newVoiceState.guild!.memberCount});
             await guildData.getFromDataBase();
@@ -274,7 +274,7 @@ module IndexFunctions{
                             .setDescription(`------\n__**I've been kicked from the voice channel! Saving playlist and stopping!**__\n__**Kicked By:**__ <@!${auditLogsEntry?.executor.id}> (${auditLogsEntry?.executor.tag})\n-----`)
                             .setTimestamp(Date.now())
                             .setTitle('__**Kicked From Channel:**__')
-                            .setAuthor(client.user.username, client.user.avatarURL());
+                            .setAuthor(client.user?.username, client.user?.avatarURL()!);
                         await currentTextChannel.send(msgEmbed);
                     }
                     if (guildData.playlist.loopAll === true || guildData.playlist.loopSong === true) {
@@ -289,16 +289,16 @@ module IndexFunctions{
             }
     
             if (guildData.playlist.voiceChannel != null) {
-                const currentVoiceChannel = await client.channels.fetch(guildData.playlist.voiceChannel!.id);
-                if (currentVoiceChannel.members.size === 1 && currentVoiceChannel.members.first()!.id === client.user.id) {
-                    const currentTextChannel = await client.channels.fetch(guildData.playlist.textChannel!.id);
+                const currentVoiceChannel = await client.channels.fetch(guildData.playlist.voiceChannel!.id) as Discord.VoiceChannel;
+                if (currentVoiceChannel.members.size === 1 && currentVoiceChannel.members.first()!.id === client.user?.id) {
+                    const currentTextChannel = await client.channels.fetch(guildData.playlist.textChannel!.id) as Discord.TextChannel;
                     const msgEmbed = new Discord.MessageEmbed();
                     msgEmbed
                         .setColor(guildData.borderColor as [number, number, number])
                         .setDescription('------\n__**Nobody left in the voice channel! Saving playlist and stopping!**__\n-----')
                         .setTimestamp(Date.now())
                         .setTitle('__**Empty Voice Channel:**__')
-                        .setAuthor(client.user.username, client.user.avatarURL());
+                        .setAuthor(client.user.username, client.user.avatarURL()!);
                     const newMsg = await currentTextChannel.send(msgEmbed);
                     currentVoiceChannel.leave();
                     if ((guildData.playlist.loopAll === true || guildData.playlist.loopSong === true) && guildData.playlist.currentSong.id !== '') {
