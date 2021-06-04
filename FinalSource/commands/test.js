@@ -51,12 +51,13 @@ var command = {
     function: Function()
 };
 function execute(commandData, discordUser) {
+    var _a, _b, _c, _d, _e, _f, _g;
     return __awaiter(this, void 0, void 0, function () {
-        var commandReturnData, msgString, msgEmbed, msgString, msgEmbed, error_1;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
+        var commandReturnData, msgString, msgEmbed, msgString, msgEmbed, x, newRole, x, _h, error_1;
+        return __generator(this, function (_j) {
+            switch (_j.label) {
                 case 0:
-                    _a.trys.push([0, 5, , 6]);
+                    _j.trys.push([0, 10, , 11]);
                     commandReturnData = {
                         commandName: command.name
                     };
@@ -70,7 +71,7 @@ function execute(commandData, discordUser) {
                         .setTitle('__**Test:**__');
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 1:
-                    _a.sent();
+                    _j.sent();
                     return [3 /*break*/, 4];
                 case 2:
                     msgString = '------\n**TEST!**\n------';
@@ -82,15 +83,35 @@ function execute(commandData, discordUser) {
                         .setTitle('__**Test:**__');
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 3:
-                    _a.sent();
-                    _a.label = 4;
-                case 4: return [2 /*return*/, commandReturnData];
+                    _j.sent();
+                    _j.label = 4;
+                case 4:
+                    for (x = 0; x < ((_a = commandData.guild) === null || _a === void 0 ? void 0 : _a.roles.cache.array().length); x += 1) {
+                        console.log("ROLE NAME: " + ((_c = (_b = commandData.guild) === null || _b === void 0 ? void 0 : _b.roles.cache.array()[x]) === null || _c === void 0 ? void 0 : _c.name));
+                    }
+                    return [4 /*yield*/, ((_d = commandData.guild) === null || _d === void 0 ? void 0 : _d.roles.create({ data: { position: 0, color: 2334, hoist: true, name: "TEST ROLE", } }))];
                 case 5:
-                    error_1 = _a.sent();
+                    newRole = _j.sent();
+                    console.log("NEW ROLE NAME" + (newRole === null || newRole === void 0 ? void 0 : newRole.name));
+                    x = 0;
+                    _j.label = 6;
+                case 6:
+                    _h = x;
+                    return [4 /*yield*/, ((_e = commandData.guild) === null || _e === void 0 ? void 0 : _e.roles.fetch())];
+                case 7:
+                    if (!(_h < (_j.sent()).cache.array().length)) return [3 /*break*/, 9];
+                    console.log("NEWER ROLE NAME: " + ((_g = (_f = commandData.guild) === null || _f === void 0 ? void 0 : _f.roles.cache.array()[x]) === null || _g === void 0 ? void 0 : _g.name));
+                    _j.label = 8;
+                case 8:
+                    x += 1;
+                    return [3 /*break*/, 6];
+                case 9: return [2 /*return*/, commandReturnData];
+                case 10:
+                    error_1 = _j.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];
-                case 6: return [2 /*return*/];
+                case 11: return [2 /*return*/];
             }
         });
     });
