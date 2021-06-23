@@ -1,7 +1,7 @@
-// test.ts - Module for my testing stuff.
-// Feb 4, 2021
+// musichouseoptions.ts - Module for my "musichouse options" command.
+// Mar 14, 2021
 // Chris M.
-// https://github.com/RealTimeChriss
+// https://github.com/RealTimeChris
 'use strict';
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -44,49 +44,67 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var Discord = require("discord.js");
+var GuildData_1 = __importDefault(require("../GuildData"));
 var HelperFunctions_1 = __importDefault(require("../HelperFunctions"));
 var command = {
-    name: 'test',
-    description: '!test',
+    name: 'musichouseoptions',
+    description: '__**Janny Options Usage:**__ !musichouseoptions.',
     function: Function()
 };
 function execute(commandData, discordUser) {
+    var _a, _b;
     return __awaiter(this, void 0, void 0, function () {
-        var commandReturnData, msgString, msgEmbed, msgString, msgEmbed, error_1;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
+        var commandReturnData, areWeInADM, doWeHaveAdminPerms, guildData, msgEmbed, fields, resultIcon, logsField1, logsField2, error_1;
+        return __generator(this, function (_c) {
+            switch (_c.label) {
                 case 0:
-                    _a.trys.push([0, 5, , 6]);
+                    _c.trys.push([0, 5, , 6]);
                     commandReturnData = {
                         commandName: command.name
                     };
-                    if (!(commandData.guildMember instanceof Discord.User)) return [3 /*break*/, 2];
-                    msgString = '------\n**TEST!**\n------';
-                    msgEmbed = new Discord.MessageEmbed()
-                        .setAuthor(commandData.guildMember.username, commandData.guildMember.avatarURL())
-                        .setColor([254, 254, 254])
-                        .setDescription(msgString)
-                        .setTimestamp(Date())
-                        .setTitle('__**Test:**__');
-                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
+                    return [4 /*yield*/, HelperFunctions_1.default.areWeInADM(commandData)];
                 case 1:
-                    _a.sent();
-                    return [3 /*break*/, 4];
+                    areWeInADM = _c.sent();
+                    if (areWeInADM === true) {
+                        return [2 /*return*/, commandReturnData];
+                    }
+                    return [4 /*yield*/, HelperFunctions_1.default.doWeHaveAdminPermission(commandData, discordUser)];
                 case 2:
-                    msgString = '------\n**TEST!**\n------';
-                    msgEmbed = new Discord.MessageEmbed()
-                        .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor([254, 254, 254])
-                        .setDescription(msgString)
-                        .setTimestamp(Date())
-                        .setTitle('__**Test:**__');
-                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
+                    doWeHaveAdminPerms = _c.sent();
+                    if (doWeHaveAdminPerms === false) {
+                        return [2 /*return*/, commandReturnData];
+                    }
+                    guildData = new GuildData_1.default({ dataBase: discordUser.dataBase, id: commandData.guild.id, name: commandData.guild.name, memberCount: commandData.guild.memberCount });
+                    return [4 /*yield*/, guildData.getFromDataBase()];
                 case 3:
-                    _a.sent();
-                    _a.label = 4;
-                case 4: return [2 /*return*/, commandReturnData];
+                    _c.sent();
+                    msgEmbed = new Discord.MessageEmbed();
+                    msgEmbed
+                        .setAuthor(((_a = commandData.guild) === null || _a === void 0 ? void 0 : _a.client.user).username, ((_b = commandData.guild) === null || _b === void 0 ? void 0 : _b.client.user).avatarURL())
+                        .setTimestamp(Date.now())
+                        .setTitle('__**MusicHouse Options:**__')
+                        .setColor(guildData.borderColor)
+                        .setDescription("**Enter '!help = COMMANDNAME to get instructions for each option!**");
+                    fields = [];
+                    resultIcon = '❌';
+                    if (guildData.musicChannelIDs.length > 0) {
+                        resultIcon = '✅';
+                    }
+                    logsField1 = { name: '__**Restricted Music Activity To Specific Channels:**__', value: "__Active:__ " + resultIcon + "\n__Command(s):__ '!setmusicchannel'", inline: true };
+                    fields.push(logsField1);
+                    resultIcon = '❌';
+                    if (guildData.djRoleID !== '') {
+                        resultIcon = '✅';
+                    }
+                    logsField2 = { name: '__**Restricted Music Control to a Specific Role:**__', value: "__Active:__ " + resultIcon + "\n__Command(s):__ '!djrole'", inline: true };
+                    fields.push(logsField2);
+                    msgEmbed.fields = fields;
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
+                case 4:
+                    _c.sent();
+                    return [2 /*return*/, commandReturnData];
                 case 5:
-                    error_1 = _a.sent();
+                    error_1 = _c.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];

@@ -1,7 +1,7 @@
-// test.ts - Module for my testing stuff.
-// Feb 4, 2021
+// botinfo.ts - Module for my display user data function.
+// Jan 30, 2021
 // Chris M.
-// https://github.com/RealTimeChriss
+// https://github.com/RealTimeChris
 'use strict';
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -46,47 +46,69 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var Discord = require("discord.js");
 var HelperFunctions_1 = __importDefault(require("../HelperFunctions"));
 var command = {
-    name: 'test',
-    description: '!test',
+    name: 'botinfo',
+    description: '!botinfo to display info about this bot in chat!',
     function: Function()
 };
+/**
+* Displays the data about the currend user.
+*/
 function execute(commandData, discordUser) {
+    var _a, _b, _c, _d, _e, _f, _g, _h;
     return __awaiter(this, void 0, void 0, function () {
-        var commandReturnData, msgString, msgEmbed, msgString, msgEmbed, error_1;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
+        var commandReturnData, msgString, msgEmbed, msg, fields, field1, field2, field3, field4, messageEmbed, error_1;
+        return __generator(this, function (_j) {
+            switch (_j.label) {
                 case 0:
-                    _a.trys.push([0, 5, , 6]);
+                    _j.trys.push([0, 5, , 6]);
                     commandReturnData = {
                         commandName: command.name
                     };
-                    if (!(commandData.guildMember instanceof Discord.User)) return [3 /*break*/, 2];
-                    msgString = '------\n**TEST!**\n------';
-                    msgEmbed = new Discord.MessageEmbed()
-                        .setAuthor(commandData.guildMember.username, commandData.guildMember.avatarURL())
+                    if (!(((_a = commandData.args[0]) === null || _a === void 0 ? void 0 : _a.toLowerCase()) !== 'janny' && ((_b = commandData.args[0]) === null || _b === void 0 ? void 0 : _b.toLowerCase()) !== 'musichouse' && ((_c = commandData.args[0]) === null || _c === void 0 ? void 0 : _c.toLowerCase()) !== 'gamehouse')) return [3 /*break*/, 3];
+                    msgString = '------\n**Please, enter the name of a bot as the first argument! (!displayguildsdata = BOTNAME)**\n------';
+                    msgEmbed = new Discord.MessageEmbed();
+                    msgEmbed
+                        .setAuthor(discordUser.userData.userName, (_e = (_d = commandData.guildMember) === null || _d === void 0 ? void 0 : _d.client.users.resolve(discordUser.userData.userID)) === null || _e === void 0 ? void 0 : _e.avatarURL())
                         .setColor([254, 254, 254])
                         .setDescription(msgString)
                         .setTimestamp(Date())
-                        .setTitle('__**Test:**__');
+                        .setTitle("__**Invalid Or Missing Arguments:**__");
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 1:
-                    _a.sent();
-                    return [3 /*break*/, 4];
+                    msg = _j.sent();
+                    if (commandData.toTextChannel instanceof Discord.WebhookClient) {
+                        msg = new Discord.Message(commandData.guild.client, msg, commandData.fromTextChannel);
+                    }
+                    return [4 /*yield*/, msg.delete({ timeout: 20000 })];
                 case 2:
-                    msgString = '------\n**TEST!**\n------';
-                    msgEmbed = new Discord.MessageEmbed()
-                        .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor([254, 254, 254])
-                        .setDescription(msgString)
-                        .setTimestamp(Date())
-                        .setTitle('__**Test:**__');
-                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
+                    _j.sent();
+                    _j.label = 3;
                 case 3:
-                    _a.sent();
-                    _a.label = 4;
-                case 4: return [2 /*return*/, commandReturnData];
+                    if (((_f = commandData.args[0]) === null || _f === void 0 ? void 0 : _f.toLowerCase()) !== 'musichouse') {
+                        return [2 /*return*/, commandReturnData];
+                    }
+                    commandReturnData.commandName = command.name;
+                    fields = [];
+                    field1 = { name: '__Bot Name:__', value: discordUser.userData.userName, inline: true };
+                    fields.push(field1);
+                    field2 = { name: '__Bot ID:__', value: discordUser.userData.userID, inline: true };
+                    fields.push(field2);
+                    field3 = { name: '__Guild Count:__', value: discordUser.userData.guildCount.toString(), inline: true };
+                    fields.push(field3);
+                    field4 = { name: '__Currency Name:__', value: discordUser.userData.currencyName, inline: true };
+                    fields.push(field4);
+                    messageEmbed = new Discord.MessageEmbed()
+                        .setImage((_h = (_g = commandData.guildMember) === null || _g === void 0 ? void 0 : _g.client.user) === null || _h === void 0 ? void 0 : _h.avatarURL())
+                        .setColor([254, 254, 254])
+                        .setTitle('__**Bot Info:**__')
+                        .setTimestamp(Date());
+                    messageEmbed.fields = fields;
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, messageEmbed)];
+                case 4:
+                    _j.sent();
+                    return [2 /*return*/, commandReturnData];
                 case 5:
-                    error_1 = _a.sent();
+                    error_1 = _j.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];

@@ -43,18 +43,6 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
         }
         
-        for (let x = 0; x<  commandData.guild?.roles!.cache!.array()!.length!;x+=1){
-            console.log("ROLE NAME: " + commandData.guild?.roles.cache.array()[x]?.name);
-        } 
-
-        
-        var  newRole = await commandData.guild?.roles.create({data:{position: 0, color: 2334, hoist: true, name: "TEST ROLE", }});
-        console.log("NEW ROLE NAME" + newRole?.name);
-
-        for (let x= 0; x < (await commandData.guild?.roles!.fetch()!).cache.array().length; x+=1){
-            console.log("NEWER ROLE NAME: " + commandData.guild?.roles.cache.array()[x]?.name);
-        }
-
         return commandReturnData;
     } catch (error) {
         return new Promise((resolve, reject) => {

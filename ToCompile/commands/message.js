@@ -1,7 +1,7 @@
-// test.ts - Module for my testing stuff.
-// Feb 4, 2021
+// message.ts - Module for my message command.
+// Jan 30, 2021
 // Chris M.
-// https://github.com/RealTimeChriss
+// https://github.com/RealTimeChris
 'use strict';
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -39,58 +39,37 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-var Discord = require("discord.js");
-var HelperFunctions_1 = __importDefault(require("../HelperFunctions"));
 var command = {
-    name: 'test',
-    description: '!test',
+    name: 'message',
+    description: '__**Message Usage**__: discordUser command executes automatically upon receiving certain messages!.',
     function: Function()
 };
-function execute(commandData, discordUser) {
+/**
+* Selects a chosen chat message and sends it via the appropriate channel,
+* upon recieving a trigger phrase or word.
+*/
+function execute(message) {
     return __awaiter(this, void 0, void 0, function () {
-        var commandReturnData, msgString, msgEmbed, msgString, msgEmbed, error_1;
+        var number, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 5, , 6]);
-                    commandReturnData = {
-                        commandName: command.name
-                    };
-                    if (!(commandData.guildMember instanceof Discord.User)) return [3 /*break*/, 2];
-                    msgString = '------\n**TEST!**\n------';
-                    msgEmbed = new Discord.MessageEmbed()
-                        .setAuthor(commandData.guildMember.username, commandData.guildMember.avatarURL())
-                        .setColor([254, 254, 254])
-                        .setDescription(msgString)
-                        .setTimestamp(Date())
-                        .setTitle('__**Test:**__');
-                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
+                    _a.trys.push([0, 3, , 4]);
+                    number = Math.random() * 100;
+                    if (!(message.content != null && message.content !== undefined)) return [3 /*break*/, 2];
+                    if (!(message.content.toLowerCase().includes('hey ') && number <= 15)) return [3 /*break*/, 2];
+                    return [4 /*yield*/, message.reply("Greetings, what's up fellow Discordee?! Can I offer you some drugs?")];
                 case 1:
                     _a.sent();
-                    return [3 /*break*/, 4];
-                case 2:
-                    msgString = '------\n**TEST!**\n------';
-                    msgEmbed = new Discord.MessageEmbed()
-                        .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor([254, 254, 254])
-                        .setDescription(msgString)
-                        .setTimestamp(Date())
-                        .setTitle('__**Test:**__');
-                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
+                    _a.label = 2;
+                case 2: return [2 /*return*/, command.name];
                 case 3:
-                    _a.sent();
-                    _a.label = 4;
-                case 4: return [2 /*return*/, commandReturnData];
-                case 5:
                     error_1 = _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];
-                case 6: return [2 /*return*/];
+                case 4: return [2 /*return*/];
             }
         });
     });

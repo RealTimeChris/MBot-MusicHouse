@@ -1,7 +1,7 @@
-// test.ts - Module for my testing stuff.
-// Feb 4, 2021
+// Index.ts - The main entry point for my Discord Bot!
+// Jan 28, 2021
 // Chris M.
-// https://github.com/RealTimeChriss
+// https://github.com/RealTimeChris
 'use strict';
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -44,56 +44,66 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var Discord = require("discord.js");
-var HelperFunctions_1 = __importDefault(require("../HelperFunctions"));
-var command = {
-    name: 'test',
-    description: '!test',
-    function: Function()
-};
-function execute(commandData, discordUser) {
-    return __awaiter(this, void 0, void 0, function () {
-        var commandReturnData, msgString, msgEmbed, msgString, msgEmbed, error_1;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    _a.trys.push([0, 5, , 6]);
-                    commandReturnData = {
-                        commandName: command.name
-                    };
-                    if (!(commandData.guildMember instanceof Discord.User)) return [3 /*break*/, 2];
-                    msgString = '------\n**TEST!**\n------';
-                    msgEmbed = new Discord.MessageEmbed()
-                        .setAuthor(commandData.guildMember.username, commandData.guildMember.avatarURL())
-                        .setColor([254, 254, 254])
-                        .setDescription(msgString)
-                        .setTimestamp(Date())
-                        .setTitle('__**Test:**__');
-                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
-                case 1:
-                    _a.sent();
-                    return [3 /*break*/, 4];
-                case 2:
-                    msgString = '------\n**TEST!**\n------';
-                    msgEmbed = new Discord.MessageEmbed()
-                        .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor([254, 254, 254])
-                        .setDescription(msgString)
-                        .setTimestamp(Date())
-                        .setTitle('__**Test:**__');
-                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
-                case 3:
-                    _a.sent();
-                    _a.label = 4;
-                case 4: return [2 /*return*/, commandReturnData];
-                case 5:
-                    error_1 = _a.sent();
-                    return [2 /*return*/, new Promise(function (resolve, reject) {
-                            reject(error_1);
-                        })];
-                case 6: return [2 /*return*/];
-            }
-        });
+var events_1 = __importDefault(require("events"));
+var IndexFunctions_1 = __importDefault(require("./IndexFunctions"));
+var DiscordUser_1 = __importDefault(require("./DiscordUser"));
+var config = require("./config.json");
+var discordUser = new DiscordUser_1.default();
+var client = new Discord.Client();
+var eventEmitter = new events_1.default();
+eventEmitter.on('HeartBeat', function () { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                console.log('HeartBeat emitted and captured!');
+                setTimeout(function () {
+                    eventEmitter.emit('HeartBeat');
+                }, 60000);
+                return [4 /*yield*/, IndexFunctions_1.default.onHeartBeat(client, discordUser)];
+            case 1:
+                _a.sent();
+                return [2 /*return*/];
+        }
     });
-}
-command.function = execute;
-exports.default = command;
+}); });
+client.once('ready', function () { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, IndexFunctions_1.default.onReady(client, discordUser, eventEmitter)];
+            case 1:
+                _a.sent();
+                return [2 /*return*/];
+        }
+    });
+}); });
+client.on('message', function (msg) { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, IndexFunctions_1.default.onMessage(msg, client, discordUser)];
+            case 1:
+                _a.sent();
+                return [2 /*return*/];
+        }
+    });
+}); });
+client.ws.on('INTERACTION_CREATE', function (interaction) { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, IndexFunctions_1.default.onInteractionCreate(interaction, client, discordUser)];
+            case 1:
+                _a.sent();
+                return [2 /*return*/];
+        }
+    });
+}); });
+client.on('voiceStateUpdate', function (oldVoiceState, newVoiceState) { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, IndexFunctions_1.default.onVoiceStatusUpdate(newVoiceState, client, discordUser)];
+            case 1:
+                _a.sent();
+                return [2 /*return*/];
+        }
+    });
+}); });
+client.login(config.botToken);
