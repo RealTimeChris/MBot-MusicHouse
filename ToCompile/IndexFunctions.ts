@@ -180,7 +180,8 @@ module IndexFunctions{
             if (name_full === 'help') {
                 if (options_full[0].options !==  undefined) {
                     const {value} = options_full[0].options[0];
-                    commandData.args[0] = value;
+                    commandData.args[0] = 'musichouse';
+                    commandData.args[1] = value;
                 }
             }
             if (name_full === 'listdbguilds') {
